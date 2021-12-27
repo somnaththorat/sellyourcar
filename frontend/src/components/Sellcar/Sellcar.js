@@ -29,7 +29,7 @@ const initialValue = {
     airbags: '',
     airconditioning: '',
     acceleration: '',
-    drivingRange: '',
+    drivingrange: '',
     // owner: localStorage.getItem('token'),
     description: '',
 }
@@ -42,7 +42,7 @@ const Sellcar = () => {
 
     const [cardetail, setCardetail] = useState(initialValue);
 
-    const { brand, model, registrationYear, fuelType, transmissionType, registrationState, carImages, price, engine, milage, color, doors, seats, airbags, airconditioning, acceleration, drivingRange, description } = cardetail;
+    const { brand, model, registrationYear, fuelType, transmissionType, registrationState, carImages, price, engine, milage, color, doors, seats, airbags, airconditioning, acceleration, drivingrange, description } = cardetail;
 
 
     // console.log(carImages);
@@ -105,7 +105,7 @@ const Sellcar = () => {
                     <TextField onChange={(e) => onValueChange(e)} name="airbags" vaariant="outlined" label="airbags" value={airbags} fullWidth />
                     <TextField onChange={(e) => onValueChange(e)} name="airconditioning" vaariant="outlined" label="air-conditioning" value={airconditioning} fullWidth />
                     <TextField onChange={(e) => onValueChange(e)} name="acceleration" vaariant="outlined" label="acceleration" value={acceleration} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="drivingRange" vaariant="outlined" label="driving-range" value={drivingRange} fullWidth />
+                    <TextField onChange={(e) => onValueChange(e)} name="drivingrange" vaariant="outlined" label="driving-range" value={drivingrange} fullWidth />
                     {/* <TextField onChange={(e) => onValueChange(e)} name="owner" vaariant="outlined" label="owner" value={owner} fullWidth  disable/> */}
                     <TextField onChange={(e) => onValueChange(e)} name="description" vaariant="outlined" label="description" value={description} fullWidth />
 

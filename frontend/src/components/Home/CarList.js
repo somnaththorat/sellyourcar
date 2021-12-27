@@ -57,7 +57,7 @@ export default function CarList({ car }) {
     console.log("handle click " + car._id);
     // history.push("/cardetails/"+car._id);
 
-    history.push({pathname: "/cardetails/", state: {car: car}});
+    history.push({pathname: "/cardetails", state: {car: car}});
   
   }
 

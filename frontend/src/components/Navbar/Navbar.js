@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import './Navbar.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory} from 'react-router-dom';
 import { Avatar, IconButton, MenuItem, Typography } from '@material-ui/core';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
@@ -30,9 +30,11 @@ const Navbar = () => {
         tokenStatus();
     }, []);
 
-
+    const history = useHistory();
     const logout = () => {
         localStorage.removeItem('token');
+        setLoggedIn(false);
+        history.push('/');
         window.location.reload('/');
     }
 

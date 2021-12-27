@@ -13,7 +13,10 @@ import Forgotpassword from './components/Forgotpassword/Forgotpassword';
 import Sellcar from './components/Sellcar/Sellcar';
 import Cardetail from './components/Cardetail/Cardetail';
 // import Navbar2 from './components/Navbar/Navbar2';
-
+import MyCars from './components/Account/MyCars';
+import EditCarDetails from './components/Account/EditCarDetails';
+import EditProfile from './components/Account/EditProfile';
+import Resetpassword from './components/Resetpassword/Resetpassword';
 
 function App() {
   return (
@@ -27,10 +30,14 @@ function App() {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/Forgotpassword" component={Forgotpassword} />
         <Route exact path="/cardetails" component={Cardetail} />
+        <Route exact path="/account" component={MyCars} />
+        <Route exact path="/account/mycar/:id" component={EditCarDetails} />
+        <Route exact path="/account/editprofile" component={EditProfile} />
+        <Route exact path="/resetPassword/:id" component={Resetpassword} />
         {/* <Route exact path="/" component={} /> */}
 
         
-
+ 
 
       </Switch>
     </BrowserRouter>

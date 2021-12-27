@@ -21,7 +21,7 @@ const Cardetail = (car) => {
     const cardetail = car.location.state.car;
     console.log(cardetail);
 
-    console.log(cardetail.ownerDetails);
+    console.log("user info", cardetail.ownerDetails);
     const ownerDetails = cardetail.ownerDetails.user;
 
    
