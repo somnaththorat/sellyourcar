@@ -104,13 +104,14 @@
 
 
 import React, { useState } from 'react';
+import Navbar from '../Navbar/Navbar.js';
 import { Grid, Paper, Avatar, TextField, Checkbox, Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Link, useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { authUser } from '../../api/Api';
-
+ 
 
 const Login = () => {
 
@@ -161,6 +162,7 @@ const Login = () => {
     const btnStyle = { margin: '20px auto' }
     return (
         <>
+            <Navbar />
             <Grid>
                 <Paper elevation={10} style={paperStyle}>
                     <Grid align="center">

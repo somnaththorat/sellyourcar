@@ -18,14 +18,18 @@ import EditCarDetails from './components/Account/EditCarDetails';
 import EditProfile from './components/Account/EditProfile';
 import Resetpassword from './components/Resetpassword/Resetpassword';
 
+
+//admin
+import AdminLogin from './components/Admin/AdminLogin/AdminLogin';
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      {/* <Navbar2 /> */}
+
+
+
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/sellcar" component={Sellcar}  />
+        <Route exact path="/sellcar" component={Sellcar} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/Forgotpassword" component={Forgotpassword} />
@@ -34,15 +38,20 @@ function App() {
         <Route exact path="/account/mycar/:id" component={EditCarDetails} />
         <Route exact path="/account/editprofile" component={EditProfile} />
         <Route exact path="/resetPassword/:id" component={Resetpassword} />
-        {/* <Route exact path="/" component={} /> */}
 
-        
- 
 
+        <Route exact path="/admin" component={AdminLogin} />
+        <Route exact path="/admin/login" component={AdminLogin} />
       </Switch>
+
+
+
+
+
     </BrowserRouter>
+
+
   );
 }
 
 export default App;
- 

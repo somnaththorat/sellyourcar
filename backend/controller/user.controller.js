@@ -1,6 +1,7 @@
 // import user from '../model/user.schema.js';
 import User from '../model/user.schema.js';
 import carDetail from '../model/carDetails.js';
+import Admin from '../model/admin.schema.js';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 import nodemailer from 'nodemailer';
@@ -425,8 +426,7 @@ export const membershipInfo = async (req, res) => {
 }
 
 
-
-//check it later
+//test it later
 export const updateMembership = async (req, res) => {
     console.log("updateMembership controller entered");
     const token = req.body.token;
@@ -448,6 +448,34 @@ export const updateMembership = async (req, res) => {
 
 
 
+//admin panel controller
+
+export const authAdmin = async (req, res) => {
+    console.log("authAdmin controller entered");
+    const admin = req.body;
+    console.log(admin);
+    try {
+        const user = await Admin.findOne({ username: admin.username });
+        console.log(user);
+        if (user) {
+            // const isMatch = await match(admin.password, user.password);
+            const isMatch = admin.password === user.password;
+            if (isMatch) {
+                
+                res.json({token: user.token});
+            } else {
+                res.json({ message: "password not match" });
+            }
+        } else {
+            res.json({ message: "user not found" });
+        }
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+
+
 
 //add alerts
 //add comparison of car price
@@ -456,3 +484,8 @@ export const updateMembership = async (req, res) => {
 //search functionality
 //cardetails page design
 // create admin panel
+// add payment gateway
+//report car in user  
+
+
+//admin panel, set default dashboard

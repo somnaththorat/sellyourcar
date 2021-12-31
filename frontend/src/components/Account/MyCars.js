@@ -1,4 +1,5 @@
 import React from 'react';
+import Navbar from '../Navbar/Navbar.js';
 import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -90,7 +91,7 @@ const MyCars = () => {
 
     return (
         <>
-
+            <Navbar/>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
                     <Toolbar>

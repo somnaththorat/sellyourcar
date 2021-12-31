@@ -2,7 +2,8 @@
 import express from 'express';
 import {getUser, getUserById, editUser, deleteUser} from '../controller/user.controller.js';
 import {addUser, authUser, getCars, addCar, getUserInfo, getCarInfo, editCar, updateUser,
-     deleteCarOfUser, forgotPassword, resetPassword, membershipInfo} from '../controller/user.controller.js';
+     deleteCarOfUser, forgotPassword, resetPassword, membershipInfo,
+     authAdmin} from '../controller/user.controller.js';
 import {uploadfile} from '../middleware/fileUpload.js';
 import Authenticate from '../middleware/authenticate.js';
 
@@ -28,6 +29,9 @@ route.delete('/deletecar', deleteCarOfUser);
 route.post('/forgotpassword', forgotPassword);
 route.post('/resetpassword', resetPassword);
 route.post('/membershipinfo', membershipInfo);
+
+//admin controllers
+route.post('/authadmin', authAdmin);
 
 
 // route.post('/addcar', uploadfile.single("carImages"), addCar);

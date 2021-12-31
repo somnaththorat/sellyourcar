@@ -71,3 +71,6 @@ export const membershipInfo = async(token) => {
 }
 
 
+export const authAdmin = async (adminLoginDetails) => {
+    return await axios.post(`${usersUrl}/authadmin`, adminLoginDetails);
+}

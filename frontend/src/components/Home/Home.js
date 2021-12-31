@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from '../Navbar/Navbar.js';
+
 import { Grid } from '@material-ui/core';
 // import Paper from '@mui/material/Paper';
 // import { styled } from '@mui/material/styles';
@@ -30,7 +32,7 @@ const Home = () => {
 
     return (
         <>
-
+            <Navbar />
             <Grid container spacing={1} style={{ padding: '50px', width: "100%" }}>
                 {cars.map((car) => (
                     <Grid key={car._id} item xs={12} sm={4} >

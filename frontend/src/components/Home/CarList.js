@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -53,35 +54,38 @@ export default function CarList({ car }) {
   // console.log(car);
   const history = useHistory();
 
-  const handleClick = async() =>{
+  const handleClick = async () => {
     console.log("handle click " + car._id);
     // history.push("/cardetails/"+car._id);
 
-    history.push({pathname: "/cardetails", state: {car: car}});
-  
+    history.push({ pathname: "/cardetails", state: { car: car } });
+
   }
 
   return (
-    <Card container style={{  backgroundColor: '#f1f1f1' }} car={car}>
-      <CardActionArea  onClick={() => { handleClick(car);}} >
-        <CardMedia
-          component="img"
-          height="240"
-          image={car.carImages}
-          alt="Car img"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {car.model}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <b> Brand Name :</b> {car.brand}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            <b> Model Name :</b> {car.model}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <>
+    
+      <Card container style={{ backgroundColor: '#f1f1f1' }} car={car}>
+        <CardActionArea onClick={() => { handleClick(car); }} >
+          <CardMedia
+            component="img"
+            height="240"
+            image={car.carImages}
+            alt="Car img"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {car.model}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <b> Brand Name :</b> {car.brand}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <b> Model Name :</b> {car.model}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </>
   );
 }

@@ -51,6 +51,11 @@ const userSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    // expire:{
+    //     type:Date,
+    //     required:true,
+    //     default:Date.now()
+    // }
 });
 
 

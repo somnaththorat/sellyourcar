@@ -1,10 +1,12 @@
 import React from 'react';
+import Navbar from '../Navbar/Navbar.js';
 import { Accordion, AccordionSummary, AccordionDetails, Grid, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const CompareCars = () => {
     return (
         <>
+        <Navbar/>
             <Grid container item xs={12} md={12} style={{backgroundColor: "none", paddingRight: '10px', marginTop: '-30px'}}>
                 <Accordion style={{ margin: '30px', width: "100%", backgroundColor: "blue" }} >
                     <AccordionSummary

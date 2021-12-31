@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Navbar from '../Navbar/Navbar.js';
 import {membershipInfo} from '../../api/Api.js';
 // import axios from 'axios';
 import { Grid } from '@material-ui/core';
@@ -118,6 +119,25 @@ const Cardetail = (car) => {
         }
     };
 
+    const handleAccordionExpandClick = async () => {
+        console.log("accordion clicked")
+        const token = localStorage.getItem('token')
+        // console.log(token)
+        if(token){
+            const membership = await membershipInfo(token);
+            if(membership.data){
+                setExpanded(!expanded);
+            }else{
+                alert("You are not a member")
+            }
+
+            
+        }else{
+            console.log("no token")
+            alert("login first")
+        }
+    };
+
 
 
 
@@ -127,6 +147,7 @@ const Cardetail = (car) => {
 
     return (
         <>
+        <Navbar/>
             <Grid container justify="space-between" spacing={2} style={{ padding: '30px', width: "100%", marginBottom: 'none', backgroundColor: "red" }} >
                 <Grid item xs={12} md={8} >
                     <Card container style={{ color: 'red', backgroundColor: '#f1f1f1' }} >
@@ -208,14 +229,16 @@ const Cardetail = (car) => {
             {/* compare cars */}
 
             <Grid container item xs={12} md={12} style={{ backgroundColor: "none", paddingRight: '10px', marginTop: '-30px' }}>
-                <Accordion style={{ margin: '30px', width: "100%", backgroundColor: "blue" }} >
+                <Accordion onClick={handleAccordionExpandClick} style={{ margin: '30px', width: "100%", backgroundColor: "blue" }} >
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
+                        expandIcon={<ExpandMoreIcon  />}
+                        
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
                         <Typography>Compare</Typography>
                     </AccordionSummary>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <AccordionDetails>
                         <TableContainer component={Paper}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -247,6 +270,7 @@ const Cardetail = (car) => {
                             </Table>
                         </TableContainer>
                     </AccordionDetails>
+                    </Collapse>
                 </Accordion>
             </Grid>
         </>
