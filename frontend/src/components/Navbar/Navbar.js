@@ -30,6 +30,14 @@ const Navbar = () => {
         tokenStatus();
     }, []);
 
+
+   //add search functionality
+
+
+
+   
+
+
     const history = useHistory();
     const logout = () => {
         localStorage.removeItem('token');
@@ -74,9 +82,9 @@ const Navbar = () => {
             <input type="checkbox" id="check" />
             <nav >
                 <NavLink to="/" className="icon"><b style={{ color: 'red' }}>S</b>ell<b style={{ color: 'red' }}>C</b>ar</NavLink>
-                <div className="search_box">
-                    <input type="search" placeholder="Search Car" />
-                    <span className="fa fa-search"></span>
+                <div className="search_box"  >
+                    <input type="search" placeholder="Search Car" name="search"  />
+                    <span className="fa fa-search" ></span>
                 </div>
                 <ol>
                     {/* <li><NavLink to="/sellcar">SellCar</NavLink></li> */}

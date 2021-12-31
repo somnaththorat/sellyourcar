@@ -53,7 +53,7 @@ const EditProfile = (userInfo) => {
         console.log("clicked");
         console.log(user);
         const responce = await updateUser(user);
-        if(responce.data == "updated"){
+        if(responce.data === "updated"){
             alert("User details updated successfully")
         history.push('/account');
         }else{  

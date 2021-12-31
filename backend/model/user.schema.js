@@ -41,20 +41,16 @@ const userSchema = mongoose.Schema({
     }],
     membership: {
         type: Boolean,
-        default: false
+        default: false,
+        endDate: {
+            type: Date,
+            default: null
+        }
     },
-    
-
     token:{
         type:String,
         required:true
     },
-    // tokens: [{
-    //     token: {
-    //         type: String,
-    //         required: true
-    //     }
-    // }]
 });
 
 

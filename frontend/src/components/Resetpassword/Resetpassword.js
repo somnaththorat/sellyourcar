@@ -38,7 +38,7 @@ const Resetpassword = () => {
             const rp = await resetPassword(pass, token);
             console.log(rp);
             console.log(rp.data);
-            if(rp.data == "password updated"){
+            if(rp.data === "password updated"){
                 // if(rp.statusText == "ok"){
                 alert("Password changed successfully")
                 window.location.href = "/login";

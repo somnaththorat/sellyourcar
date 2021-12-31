@@ -66,4 +66,8 @@ export const resetPassword = async (pass, token) => {
 }
 
 
+export const membershipInfo = async(token) => {
+    return await axios.post(`${usersUrl}/membershipinfo`, {token: token});
+}
+
 

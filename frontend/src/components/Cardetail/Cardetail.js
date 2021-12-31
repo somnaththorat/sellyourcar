@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import {membershipInfo} from '../../api/Api.js';
+// import axios from 'axios';
 import { Grid } from '@material-ui/core';
 import { Card, CardMedia } from '@material-ui/core';
 import { Button, CardActions, CardContent, Typography } from '@material-ui/core';
 import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import Collapse from '@mui/material/Collapse';
 
 //for table
 import Table from '@mui/material/Table';
@@ -14,17 +18,44 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+
+
+
+
+const ExpandMore = styled((props) => {
+    const { expand, ...other } = props;
+    return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+    }),
+}));
+
 
 const Cardetail = (car) => {
 
     // const [cardetail, setCardetails] = useState(car.location.state.car);
     const cardetail = car.location.state.car;
-    console.log(cardetail);
+    // console.log(cardetail);
 
-    console.log("user info", cardetail.ownerDetails);
+    // console.log("user info", cardetail.ownerDetails);
     const ownerDetails = cardetail.ownerDetails.user;
 
-   
+
+  
+
+    useEffect(() => {
+        // fetchCarDetails();
+    }, []);
+
+
+
+
+
 
     //olx api
     // const searchcarname = cardetail.model.replace(/ /g, '')
@@ -63,9 +94,40 @@ const Cardetail = (car) => {
         createData('Gingerbread', 356, 16.0, 49, 3.9),
     ];
 
+
+
+
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleExpandClick = async () => {
+        console.log("clicked")
+        const token = localStorage.getItem('token')
+        // console.log(token)
+        if(token){
+            const membership = await membershipInfo(token);
+            if(membership.data){
+                setExpanded(!expanded);
+            }else{
+                alert("You are not a member")
+            }
+
+            
+        }else{
+            console.log("no token")
+            alert("login first")
+        }
+    };
+
+
+
+
+
+
+
+
     return (
         <>
-            <Grid container justify="space-between" spacing={2} style={{ padding: '30px', width: "100%", marginBottom: 'none', backgroundColor: "white" }} >
+            <Grid container justify="space-between" spacing={2} style={{ padding: '30px', width: "100%", marginBottom: 'none', backgroundColor: "red" }} >
                 <Grid item xs={12} md={8} >
                     <Card container style={{ color: 'red', backgroundColor: '#f1f1f1' }} >
                         <CardMedia
@@ -90,30 +152,30 @@ const Cardetail = (car) => {
                             </Typography>
 
                             <Typography gutterBottom variant="h6" >
-                                Model Name:  {cardetail.brand}
+                                Model Name:  {cardetail.model}
                             </Typography>
 
                             <Typography gutterBottom variant="h6" >
-                                Registration Year:  {cardetail.brand}
+                                Registration Year:  {cardetail.registrationYear}
                             </Typography>
 
                             <Typography gutterBottom variant="h6" >
-                                Transmission Type:  {cardetail.brand}
+                                Transmission Type:  {cardetail.transmissionType}
                             </Typography>
 
                             <Typography gutterBottom variant="h6" >
-                                Fuel Type:  {cardetail.brand}
+                                Fuel Type:  {cardetail.fuelType}
                             </Typography>
 
                             <Typography gutterBottom variant="h6" >
-                                Registration State:  {cardetail.brand}
+                                Registration State:  {cardetail.registrationState}
                             </Typography>
-                            <Typography gutterBottom variant="h6" >
+                            {/* <Typography gutterBottom variant="h6" >
                                 Price:  {cardetail.brand}
                             </Typography>
                             <Typography gutterBottom variant="body" >
-                            ownerDetails.email:  {ownerDetails.email}
-                            </Typography>
+                                ownerDetails.email:  {ownerDetails.email}
+                            </Typography> */}
 
 
 
@@ -124,11 +186,18 @@ const Cardetail = (car) => {
                             <Typography variant="body2" color="text.secondary">
                                 Small description about the car
                             </Typography>
-                            
+
                         </CardContent>
                         <CardActions>
-                            <Button size="small">Read More</Button>
+                            <Button size="small" onClick={handleExpandClick}>Read More</Button>
                         </CardActions>
+
+                        
+                        <Collapse in={expanded} timeout="auto" unmountOnExit>
+                            <CardContent>
+                                <Typography paragraph>Method:</Typography>
+                            </CardContent>
+                        </Collapse>
                     </Card>
 
                 </Grid>
@@ -136,6 +205,7 @@ const Cardetail = (car) => {
 
 
             {/* accordion */}
+            {/* compare cars */}
 
             <Grid container item xs={12} md={12} style={{ backgroundColor: "none", paddingRight: '10px', marginTop: '-30px' }}>
                 <Accordion style={{ margin: '30px', width: "100%", backgroundColor: "blue" }} >

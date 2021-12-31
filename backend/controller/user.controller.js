@@ -406,6 +406,44 @@ export const resetPassword = async (req, res) => {
 }
    
 
+export const membershipInfo = async (req, res) => {
+    const token = req.body.token;
+    // const decoded = jwt.verify(token, SECRET_KEY);
+    // console.log(decoded)
+    try{
+        const user = await User.findOne({ token: token });
+        // console.log("user is ", user);
+        if (user) {
+           res.json(user.membership);
+        } else {
+            res.json("token not found");
+        }
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+
+}
+
+
+
+//check it later
+export const updateMembership = async (req, res) => {
+    console.log("updateMembership controller entered");
+    const token = req.body.token;
+    try{
+        const user = await User.findOne({ token: token });
+        // console.log("user is ", user);
+        if (user) {
+            //add time to make false
+            await User.findOneAndUpdate({ user }, { membership: { membership: true, endDate: new Date(Date.now() + (1000 * 60 * 60 * 24 * 365)) } });
+            res.json("membership updated");
+        } else {
+            res.json("token not found");
+        }
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
 
 
 
@@ -414,6 +452,6 @@ export const resetPassword = async (req, res) => {
 //add alerts
 //add comparison of car price
 //change navbar
-//reset password functionality and page design
-// password encryption using bcrypt
 // save image in server and change base64 to image path in db
+//search functionality
+//cardetails page design
