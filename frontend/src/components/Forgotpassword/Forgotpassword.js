@@ -23,7 +23,12 @@ const Forgotpassword = () => {
     const forgotpassword = async () => {
         console.log("clicked");
         console.log(email);
-        await forgotPassword(email);
+        const responce = await forgotPassword(email);
+        if(responce.data === "email sent"){
+            alert("Email sent, check your mail");
+        }else{
+            alert("Email not found")
+        }
         // history.push('/account');
     }  
 

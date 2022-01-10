@@ -21,11 +21,9 @@ export const getCarInfo = async (carIds) => {
 }
 
 
-
-// export const updateUser = async (user)=>{
-
-// }
-
+export const deleteUser = async (id) => {
+    return await axios.delete(`${usersUrl}/deleteuser/${id}`);
+}
 
 
 export const authUser = async (userLoginDetails) => {
@@ -70,7 +68,35 @@ export const membershipInfo = async(token) => {
     return await axios.post(`${usersUrl}/membershipinfo`, {token: token});
 }
 
+export const updateMembership = async (token) => {
+    return await axios.post(`${usersUrl}/updatemembership`, {headers: token});
+}
 
+export const reportCarDetails = async (token, carId, reportMessage) => {
+    return await axios.post(`${usersUrl}/reportcardetails`, {token: token, carId: carId, reportMessage: reportMessage});
+}
+
+//admin apis
 export const authAdmin = async (adminLoginDetails) => {
     return await axios.post(`${usersUrl}/authadmin`, adminLoginDetails);
+}
+
+export const fetchAllUsers = async () => {
+    return await axios.get(`${usersUrl}/getusers`);
+}
+
+export const fetchAllCars = async () => {
+    return await axios.get(`${usersUrl}/getcars`);
+}
+
+export const fetchAllReports = async () => {
+    return await axios.get(`${usersUrl}/getreports`);
+}
+
+export const deleteReport =async (id) => {
+    return await axios.delete(`${usersUrl}/deletereport/${id}`)
+}
+
+export const deleteCar =async (id) => {
+    return await axios.delete(`${usersUrl}/deletecarfromreport/${id}`)
 }

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../Navbar/Navbar.js';
-import {membershipInfo} from '../../api/Api.js';
+import { membershipInfo, updateMembership, reportCarDetails } from '../../api/Api.js';
 // import axios from 'axios';
 import { Grid } from '@material-ui/core';
 import { Card, CardMedia } from '@material-ui/core';
@@ -21,6 +21,28 @@ import Paper from '@mui/material/Paper';
 
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+
+
+
+
+
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    pt: 2,
+    px: 4,
+    pb: 3,
+};
 
 
 
@@ -47,7 +69,7 @@ const Cardetail = (car) => {
     const ownerDetails = cardetail.ownerDetails.user;
 
 
-  
+
 
     useEffect(() => {
         // fetchCarDetails();
@@ -98,22 +120,27 @@ const Cardetail = (car) => {
 
 
 
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [openreport, setOpenreport] = useState(false);
+    const [reportMessage, setReportMessage] = useState('');
 
-    const handleExpandClick = async () => {
+
+    const handleReadMoreClick = async () => {
         console.log("clicked")
         const token = localStorage.getItem('token')
         // console.log(token)
-        if(token){
+        if (token) {
             const membership = await membershipInfo(token);
-            if(membership.data){
+            const user = membership.data;
+            var newDate = new Date().toISOString();
+            if (user.membership === true && user.membershipexpiry > newDate) {
                 setExpanded(!expanded);
-            }else{
+            } else {
                 alert("You are not a member")
+                setOpen(true);
             }
-
-            
-        }else{
+        } else {
             console.log("no token")
             alert("login first")
         }
@@ -123,32 +150,83 @@ const Cardetail = (car) => {
         console.log("accordion clicked")
         const token = localStorage.getItem('token')
         // console.log(token)
-        if(token){
+        if (token) {
             const membership = await membershipInfo(token);
-            if(membership.data){
+            // console.log(membership.data)
+            const user = membership.data;
+            var newDate = new Date().toISOString();
+            if (user.membership === true && user.membershipexpiry > newDate) {
                 setExpanded(!expanded);
-            }else{
+            } else {
                 alert("You are not a member")
+                setOpen(true);
             }
 
-            
-        }else{
+        } else {
             console.log("no token")
             alert("login first")
         }
     };
 
 
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleCloseReport = () => {
+        setOpenreport(false);
+    };
+
+
+    const getmembership = async () => {
+        console.log(" get membership clicked")
+        const token = localStorage.getItem('token')
+        // console.log(token)
+        const response = await updateMembership(token);
+        // console.log(response)
+        // console.log(response.data)
+        if (response.data === 'membership updated') {
+            setOpen(false);
+            alert("congrats!! You are a premium member now. ")
+        }
 
 
 
+    }
 
 
+    const openReportForm = () => {
+        console.log("clicked")
+        const token = localStorage.getItem('token')
+        // console.log(token)
+        if (token) {
+            setOpenreport(true);
+        } else {
+            console.log("no token")
+            alert("login first")
+        }
+    }
+
+    const reportCar = async () => {
+        console.log("report car clicked")
+        const token = localStorage.getItem('token')
+        console.log(reportMessage)
+        // console.log(token)
+        const carId = cardetail._id;
+        console.log(carId)
+        const response = await reportCarDetails(token, carId, reportMessage);
+        // console.log(response)
+        console.log(response.data)
+        setOpenreport(false);
+        if (response.data === 'car reported') {
+            alert("car reported successfully")
+        }
+    }
 
     return (
         <>
-        <Navbar/>
-            <Grid container justify="space-between" spacing={2} style={{ padding: '30px', width: "100%", marginBottom: 'none', backgroundColor: "red" }} >
+            <Navbar />
+            <Grid container justify="space-between" spacing={2} style={{ padding: '30px', width: "100%", marginBottom: 'none', backgroundColor: "#7900FF" }} >
                 <Grid item xs={12} md={8} >
                     <Card container style={{ color: 'red', backgroundColor: '#f1f1f1' }} >
                         <CardMedia
@@ -163,10 +241,29 @@ const Cardetail = (car) => {
                 <Grid item xs={12} md={4}  >
                     <Card style={{ backgroundColor: '#757ce8' }} >
                         <CardContent >
-                            <div className="container">heading<div align="right">data</div></div>
-
                             <Typography gutterBottom variant="h4"  >
                                 Description
+                                <Button variant="contained" color="success" style={{ float: 'right', color: "red" }} onClick={openReportForm}>Report</Button>
+                                <Modal
+                                    open={openreport}
+                                    onClose={handleCloseReport}
+                                    aria-labelledby="parent-modal-title"
+                                    aria-describedby="parent-modal-description"
+                                >
+                                    <Box sx={{ ...style, width: 500 }}>
+                                        <TextareaAutosize
+                                            aria-label="minimum height"
+                                            minRows={3}
+                                            placeholder="Enter Report Description"
+                                            style={{ width: 430 }}
+                                            onChange={(e) => setReportMessage(e.target.value)}
+                                        />
+                                        <br></br>
+                                        <Button size="small" onClick={reportCar}>Report Car</Button>
+                                    </Box>
+                                </Modal>
+
+
                             </Typography>
                             <Typography gutterBottom variant="h6" >
                                 Brand Name: {cardetail.brand}
@@ -210,10 +307,25 @@ const Cardetail = (car) => {
 
                         </CardContent>
                         <CardActions>
-                            <Button size="small" onClick={handleExpandClick}>Read More</Button>
+                            <Button size="small" onClick={handleReadMoreClick}>Read More</Button>
+                            {/* <Button size="small" onClick={handleOpen}>Read More</Button> */}
                         </CardActions>
+                        <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="parent-modal-title"
+                            aria-describedby="parent-modal-description"
+                        >
+                            <Box sx={{ ...style, width: 500 }}>
+                                <h2 id="parent-modal-title">You want to get membership?</h2><br></br>
+                                <p id="parent-modal-description">
+                                    Pay Rs.500/- and get membership for 1 year
+                                </p><br></br>
+                                <Button size="small" onClick={getmembership}>Get Membership</Button>
+                            </Box>
+                        </Modal>
 
-                        
+
                         <Collapse in={expanded} timeout="auto" unmountOnExit>
                             <CardContent>
                                 <Typography paragraph>Method:</Typography>
@@ -228,48 +340,48 @@ const Cardetail = (car) => {
             {/* accordion */}
             {/* compare cars */}
 
-            <Grid container item xs={12} md={12} style={{ backgroundColor: "none", paddingRight: '10px', marginTop: '-30px' }}>
+            <Grid container item xs={12} md={12} style={{ backgroundColor: "#7900FF", paddingRight: '10px', marginTop: '-30px' }}>
                 <Accordion onClick={handleAccordionExpandClick} style={{ margin: '30px', width: "100%", backgroundColor: "blue" }} >
                     <AccordionSummary
-                        expandIcon={<ExpandMoreIcon  />}
-                        
+                        expandIcon={<ExpandMoreIcon />}
+
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
                         <Typography>Compare</Typography>
                     </AccordionSummary>
                     <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <AccordionDetails>
-                        <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell><h3>{cardetail.model}</h3></TableCell>
-                                        <TableCell align="right">SellYourCar</TableCell>
-                                        <TableCell align="right">OLX</TableCell>
-                                        <TableCell align="right">Carwale</TableCell>
-                                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {rows.map((row) => (
-                                        <TableRow
-                                            key={row.name}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell align="right">{row.calories}</TableCell>
-                                            <TableCell align="right">{row.fat}</TableCell>
-                                            <TableCell align="right">{row.carbs}</TableCell>
-                                            <TableCell align="right">{row.protein}</TableCell>
+                        <AccordionDetails>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell><h3>{cardetail.model}</h3></TableCell>
+                                            <TableCell align="right">SellYourCar</TableCell>
+                                            <TableCell align="right">OLX</TableCell>
+                                            <TableCell align="right">Carwale</TableCell>
+                                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </AccordionDetails>
+                                    </TableHead>
+                                    <TableBody>
+                                        {rows.map((row) => (
+                                            <TableRow
+                                                key={row.name}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+                                                <TableCell component="th" scope="row">
+                                                    {row.name}
+                                                </TableCell>
+                                                <TableCell align="right">{row.calories}</TableCell>
+                                                <TableCell align="right">{row.fat}</TableCell>
+                                                <TableCell align="right">{row.carbs}</TableCell>
+                                                <TableCell align="right">{row.protein}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </AccordionDetails>
                     </Collapse>
                 </Accordion>
             </Grid>

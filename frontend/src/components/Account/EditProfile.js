@@ -55,8 +55,9 @@ const EditProfile = (userInfo) => {
         console.log(user);
         const responce = await updateUser(user);
         if(responce.data === "updated"){
-            alert("User details updated successfully")
-        history.push('/account');
+            alert("User details updated successfully, Login Again")
+            localStorage.removeItem('token')
+        history.push('/');
         }else{  
             alert("User details not updated")
         }

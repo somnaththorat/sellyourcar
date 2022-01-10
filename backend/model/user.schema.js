@@ -42,20 +42,16 @@ const userSchema = mongoose.Schema({
     membership: {
         type: Boolean,
         default: false,
-        endDate: {
-            type: Date,
-            default: null
-        }
     },
     token:{
         type:String,
         required:true
     },
-    // expire:{
-    //     type:Date,
-    //     required:true,
-    //     default:Date.now()
-    // }
+    membershipexpiry:{
+        type:Date,
+        required:true,
+        default:Date.now()
+    }
 });
 
 

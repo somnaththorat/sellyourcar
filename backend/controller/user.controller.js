@@ -2,9 +2,11 @@
 import User from '../model/user.schema.js';
 import carDetail from '../model/carDetails.js';
 import Admin from '../model/admin.schema.js';
+import Report from '../model/carReport.js';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 import nodemailer from 'nodemailer';
+import CarDetail from '../model/carDetails.js';
 const SECRET_KEY = "THISISMYSECRETKEYFORSELLYOURCARPROJECT"
 
 
@@ -45,14 +47,14 @@ export const editUser = async (req, res) => {
     }
 }
 
-export const deleteUser = async (req, res) => {
-    try {
-        await User.deleteOne({ _id: req.params.id });
-        res.json("user deleted successfully");
-    } catch (error) {
-        res.json({ message: error.message });
-    }
-}
+// export const deleteUser = async (req, res) => {
+//     try {
+//         await User.deleteOne({ _id: req.params.id });
+//         res.json("user deleted successfully");
+//     } catch (error) {
+//         res.json({ message: error.message });
+//     }
+// }
 
 
 
@@ -69,12 +71,38 @@ export const addUser = async (req, res) => {
     const newUser = new User(user);
     try {
         //crete token
-        const token = jwt.sign({ user: user }, SECRET_KEY);
+        const token = jwt.sign({ user: newUser }, SECRET_KEY);
         //add token value to user
         newUser.token = token;
         console.log(newUser);
         await newUser.save();
         res.json(newUser);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    console.log("delete user controller enterd");
+
+    const id = req.params.id;
+    console.log(id);
+    try {
+        const user = await User.findById(id);
+        console.log(user);
+        //delete cars of user
+        for (const element of user.carId) {
+            await carDetail.deleteOne({ _id: element });
+        }
+
+        // user.carId.forEach(element => {
+        //     await carDetail.deleteOne({ _id: element });
+        // });
+
+
+        //delete user
+        await User.deleteOne({ _id: id });
+        res.json("user deleted successfully");
     } catch (error) {
         res.json({ message: error.message });
     }
@@ -113,7 +141,7 @@ export const authUser = async (req, res) => {
 }
 
 export const getCars = async (req, res) => {
-    console.log("getCar from usercontroller");
+    console.log("getCars from usercontroller");
     // res.send("getCars route from user.controller");
     try {
         let car = await carDetail.find();
@@ -127,19 +155,24 @@ export const getCars = async (req, res) => {
 export const addCar = async (req, res) => {
     console.log("addCar controller enterd");
     const car = req.body;
-    //decrypt token
+    // console.log(car);
     const decoded = jwt.verify(car.ownerDetails, SECRET_KEY);
+    // console.log(decoded)
     const user = await User.findById(decoded.user._id);
+    // console.log("user is ", user)
     car.ownerDetails = decoded;
     const newCar = new carDetail(car);
+    // console.log("newcar ",newCar)
     const userCarId = newCar._id;
+    // console.log("usercarid is ",userCarId)  
 
     try {
         await newCar.save();
         await User.updateOne({ _id: user._id }, { $push: { carId: userCarId } });
         res.json(newCar);
     } catch (error) {
-        res.json({ message: "error while uploading cardetails" });
+        // res.json({ message: "error while uploading cardetails" });
+        res.json(error.message);
     }
 }
 
@@ -194,12 +227,14 @@ export const addCar = async (req, res) => {
 export const getUserInfo = async (req, res) => {
     console.log("getUserInfo controller entered");
     const token = req.headers.token;
-    // console.log(token)
+    // console.log("token ",token)
     const decoded = jwt.verify(token, SECRET_KEY);
     // console.log(decoded);
     try {
-        const user = await User.findById(decoded.user._id);
-        // console.log(user);
+        // const user = await User.findById(decoded.user._id);
+        const user = await User.findOne({ token: token });
+
+        console.log(user);
 
         //find cars of user using carId array
         // const carIdArray = user.carId;
@@ -331,8 +366,8 @@ export const deleteCarOfUser = async (req, res) => {
 export const forgotPassword = async (req, res) => {
     console.log("forgotPassword controller entered");
     const email = req.body.email;
-    console.log(req.body);
-    console.log(email);
+    // console.log(req.body);
+    // console.log(email);
     try {
         const user = await User.findOne({ email: email });
         // console.log(user);
@@ -348,7 +383,7 @@ export const forgotPassword = async (req, res) => {
             });
             const token = user.token;// change this id for security purpose
             // const token = jwt.sign({ user: user }, SECRET_KEY);
-            console.log(token);
+            // console.log(token);
             const url = `http://localhost:3000/resetPassword/${token}`;
             const mailOptions = {
                 from: '"Sell-Your-Car" <aic.tsomnath@gmail.com>',
@@ -381,18 +416,18 @@ export const resetPassword = async (req, res) => {
     console.log(info);
     const newPassword = info.password;
     const token = info.token;
-    console.log(newPassword);   
+    console.log(newPassword);
     // console.log(token);
     try {
         const user = await User.findOne({ token: token });
-        console.log(" user is ",  user);
+        console.log(" user is ", user);
         if (user) {
             const userId = user._id;
             console.log(userId);
             // const hashedPassword = await bcrypt.hash(newPassword, 10);
             // console.log(hashedPassword);
             await User.findByIdAndUpdate(userId, { password: newPassword });
-            const updatedUser = { _id:user._id, fullname: user.fullname, district: user.district, state: user.state, mobilenumber: user.mobilenumber, email: user.email, username: user.username, password: newPassword}
+            const updatedUser = { _id: user._id, fullname: user.fullname, district: user.district, state: user.state, mobilenumber: user.mobilenumber, email: user.email, username: user.username, password: newPassword }
             // console.log(updatedUser);
             const updatedToken = jwt.sign({ user: updatedUser }, SECRET_KEY);
             // console.log(updatedToken);
@@ -405,17 +440,17 @@ export const resetPassword = async (req, res) => {
         res.json({ message: error.message });
     }
 }
-   
+
 
 export const membershipInfo = async (req, res) => {
     const token = req.body.token;
     // const decoded = jwt.verify(token, SECRET_KEY);
     // console.log(decoded)
-    try{
+    try {
         const user = await User.findOne({ token: token });
         // console.log("user is ", user);
         if (user) {
-           res.json(user.membership);
+            res.json(user);
         } else {
             res.json("token not found");
         }
@@ -429,21 +464,66 @@ export const membershipInfo = async (req, res) => {
 //test it later
 export const updateMembership = async (req, res) => {
     console.log("updateMembership controller entered");
-    const token = req.body.token;
-    try{
+    const token = req.body.headers;
+    try {
         const user = await User.findOne({ token: token });
         // console.log("user is ", user);
         if (user) {
-            //add time to make false
-            await User.findOneAndUpdate({ user }, { membership: { membership: true, endDate: new Date(Date.now() + (1000 * 60 * 60 * 24 * 365)) } });
+            // await User.findOneAndUpdate({ user ,  {membership: true} }); 
+            // const currentDate = new Date();
+            // console.log("current date",currentDate)
+            // const currentDate2 = currentDate + (365 * 24 * 60 * 60);
+            // console.log("current date 2 ", currentDate2)
+            // const newExpiryDate = new Date(currentDate2);
+            // console.log("expiry ",newExpiryDate)
+            // const a = currentDate.setFullYear(currentDate.getFullYear() + 1);
+
+            var currentDate = new Date();
+            console.log("currentDate", currentDate);
+            // console.log(exp.setFullYear(exp.getFullYear() + 1))
+            var exp2 = currentDate.setFullYear(currentDate.getFullYear() + 1)
+            var newExpiryDate = new Date(exp2)
+            console.log("new expiry date", newExpiryDate);
+
+            await User.findOneAndUpdate({ token: token }, { membership: true, membershipexpiry: newExpiryDate });
+
+
             res.json("membership updated");
         } else {
             res.json("token not found");
         }
     } catch (error) {
+        console.log("catch block")
         res.json({ message: error.message });
     }
 }
+
+export const reportCarDetails = async (req, res) => {
+    console.log("reportCarDetails controller entered");
+    const info = req.body;
+    console.log(info)
+    const decoded = jwt.verify(info.token, SECRET_KEY);
+    console.log(decoded)
+    const username = decoded.user.username
+    const addreport = {}
+    addreport.username = username
+    addreport.carId = info.carId
+    addreport.reportMessage = info.reportMessage
+    console.log("addreport", addreport)
+
+    try {
+        const newReport = new Report(addreport);
+        await newReport.save();
+        console.log("report saved");
+        res.json("car reported");
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+
+
+
 
 
 
@@ -461,8 +541,8 @@ export const authAdmin = async (req, res) => {
             // const isMatch = await match(admin.password, user.password);
             const isMatch = admin.password === user.password;
             if (isMatch) {
-                
-                res.json({token: user.token});
+
+                res.json({ token: user.token });
             } else {
                 res.json({ message: "password not match" });
             }
@@ -475,17 +555,87 @@ export const authAdmin = async (req, res) => {
 }
 
 
+export const getAllUsers = async (req, res) => {
+    console.log("getAllUsers controller entered");
+    try {
+        const users = await User.find();
+        // console.log(users);
+        res.json(users);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+
+export const getAllCars = async (req, res) => {
+    console.log("getAllCars controller entered");
+    try {
+        const cars = await CarDetail.find();
+        // console.log(users);
+        res.json(cars);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+export const getAllReports = async (req, res) => {
+    console.log("getAllReports controller entered");
+    try {
+        const reports = await Report.find();
+        // console.log(users);
+        res.json(reports);
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+
+export const deleteReport = async (req, res) => {
+    console.log("delete user controller enterd");
+
+    const id = req.params.id;
+    console.log(id);
+    try {
+        await Report.deleteOne({ _id: id });
+        res.json("report deleted successfully");
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+export const deleteCarFromReport = async (req, res) => {
+    console.log("deleteCarFromReport controller entered");
+    const reportid = req.params.id;
+    console.log(reportid)
+    
+    try {
+        const report = await Report.findOne({_id: reportid})
+        console.log("report", report)
+        const user = await User.findOne({carId: report.carId})
+        console.log("user",user)
+        if (await User.findByIdAndUpdate(user._id, { $pull: { carId: report.carId } })) {
+            console.log("update done")
+        }
+        await carDetail.findByIdAndDelete(report.carId);
+        await Report.deleteOne({reportid})
+        res.json("deleted");
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+
+
+//search functionality
+//add comparison of car price
+// add payment gateway
 
 
 //add alerts
-//add comparison of car price
 //change navbar
-// save image in server and change base64 to image path in db
-//search functionality
-//cardetails page design
-// create admin panel
-// add payment gateway
-//report car in user  
+//change expand button effect on car details page, accordion error
+//addcar payload too large error-> solved/ check again
+//update token in localstorage after update and sign in again
 
 
 //admin panel, set default dashboard

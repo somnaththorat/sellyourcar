@@ -23,6 +23,8 @@ const AdminNavbar = () => {
         console.log(response);
         if (response !== null) {
             setLoggedIn(true);
+        }else{
+            history.push('/admin/login');
         }
     };
 
@@ -78,10 +80,10 @@ const AdminNavbar = () => {
                 {/* <NavLink to="/" className="icon"><b style={{ color: 'red' }}>S</b>ell<b style={{ color: 'red' }}>C</b>ar </NavLink> */}
 
                 <NavLink to="/admin" ><b className="icon">Admin</b></NavLink>
-                <div className="search_box"  >
+                {/* <div className="search_box"  >
                     <input type="search" placeholder="Search Car" name="search"  />
                     <span className="fa fa-search" ></span>
-                </div>
+                </div> */}
                 <ol>
                     {/* <li><NavLink to="/sellcar">SellCar</NavLink></li> */}
                     {/* {loggedIn ? <li><NavLink to="/sellcar">SellCar</NavLink></li> : <li><NavLink to="/login">SellCar</NavLink></li>} */}

@@ -27,6 +27,7 @@ const MyCars = () => {
         let token = localStorage.getItem('token');
         // console.log(token);
         const response = await getUserInfo(token);
+        console.log(response.data);
         setUserInfo(response.data);
 
 

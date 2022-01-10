@@ -21,6 +21,12 @@ import Resetpassword from './components/Resetpassword/Resetpassword';
 
 //admin
 import AdminLogin from './components/Admin/AdminLogin/AdminLogin';
+import AdminDashboard from './components/Admin/AdminDashboard/AdminDashboard';
+import Userlist from './components/Admin/Userlist/Userlist';
+import Carlist from './components/Admin/Carlist/Carlist';
+import Reportlist from './components/Admin/Reportlist/Reportlist'
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -40,8 +46,13 @@ function App() {
         <Route exact path="/resetPassword/:id" component={Resetpassword} />
 
 
-        <Route exact path="/admin" component={AdminLogin} />
+        <Route exact path="/admin" component={AdminDashboard} />
         <Route exact path="/admin/login" component={AdminLogin} />
+        <Route exact path="/admin/dashboard" component={AdminDashboard} />
+        <Route exact path="/admin/users" component={Userlist} />
+        <Route exact path="/admin/cars" component={Carlist} />
+        <Route exact path="/admin/carreports" component={Reportlist} />
+
       </Switch>
 
 

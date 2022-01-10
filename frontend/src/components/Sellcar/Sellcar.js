@@ -64,15 +64,15 @@ const Sellcar = () => {
 
 
 
-    const addCarDetails = async (e) => {
-        e.preventDefault();
+    const addCarDetails = async () => {
         console.log("submit button clicked");
         // console.log(cardetail);
-        const ownerName = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         // console.log(ownerName);
-        cardetail.ownerDetails = ownerName;
+        cardetail.ownerDetails = token;
         console.log(cardetail);
-        await addCar(cardetail);
+       const responce = await addCar(cardetail);
+       console.log("responce", responce.data)
         // history.push('/');
     }
 
