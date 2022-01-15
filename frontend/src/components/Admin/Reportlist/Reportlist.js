@@ -76,11 +76,11 @@ let srno = 1
   return (
       <>
       <Navbar/>
-      <Grid container style={{ padding: '30px', width: "100%", marginBottom: 'none', backgroundColor: "#7900FF" }} >
+      <Grid container style={{ padding: '10px', width: "100%", marginBottom: 'none', backgroundColor: "#7900FF" }} >
                 <h2>Report List</h2>
             </Grid>
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 540 }}>
+      <TableContainer sx={{ maxHeight: 500 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>

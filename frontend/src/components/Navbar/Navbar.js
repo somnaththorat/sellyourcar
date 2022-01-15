@@ -48,17 +48,9 @@ const Navbar = () => {
 
 
 
-
-
-
-    // const [anchorElUser, setAnchorElUser] = React.useState(null);
-    // const userMenu = (e) => {
-    //     console.log('user menu');
-    //     setAnchorElUser(e.currentTarget);
-    // }
-
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [search, setSearch] = React.useState('');
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -75,17 +67,17 @@ const Navbar = () => {
         setAnchorElUser(null);
     };
 
-
+// console.log("search", search);
 
     return (
         <>
             <input type="checkbox" id="check" />
             <nav >
                 <NavLink to="/" className="icon"><b style={{ color: 'red' }}>S</b>ell<b style={{ color: 'red' }}>C</b>ar</NavLink>
-                <div className="search_box"  >
-                    <input type="search" placeholder="Search Car" name="search"  />
+                {/* <div className="search_box"  >
+                    <input type="text" placeholder="Search Car" name="search" onChange={e=> setSearch(e.target.value)} />
                     <span className="fa fa-search" ></span>
-                </div>
+                </div> */}
                 <ol>
                     {/* <li><NavLink to="/sellcar">SellCar</NavLink></li> */}
                     {loggedIn ? <li><NavLink to="/sellcar">SellCar</NavLink></li> : <li><NavLink to="/login">SellCar</NavLink></li>}
@@ -94,14 +86,7 @@ const Navbar = () => {
                     {loggedIn ? <li><NavLink to="/" onClick={logout}>Logout</NavLink></li> : <li><NavLink to="/login" >Login</NavLink></li>}
                     {loggedIn ?
                         <li>
-                            {/* <Avatar style={{ width: 24, height: 24 }}
-                                onClick={console.log("clicked")}
-                            />
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} >
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}  */}
+                            
 
 
 

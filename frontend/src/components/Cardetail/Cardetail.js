@@ -70,32 +70,28 @@ const Cardetail = (car) => {
 
 
 
-
+    // fetch data from olx website
+    const [olxData, setOlxData] = useState([]);
+    // console.log(cardetail)
+    const olxUrl = `https://www.olx.in/items/q-${cardetail.model}?isSearchCall=true`
+    console.log(olxUrl)
     useEffect(() => {
-        // fetchCarDetails();
+        fetchOlxData();
     }, []);
 
-
-
-
-
-
-    //olx api
-    // const searchcarname = cardetail.model.replace(/ /g, '')
-    // console.log(searchcarname);
-
-    // const olxUrl = "https://www.olx.in/items/q-"+searchcarname+"?isSearchCall=true";
-    // console.log(olxUrl);
-    // useEffect(() => {
-    //     carDetailsWithFetch();
-    // }, []);
-
-    // const carDetailsWithFetch = async () => {
-    //     const response = await fetch(olxUrl);
-    //     const jsonData = await response.json();
-    //     console.log(jsonData);
+    // const fetchOlxData = async () => {
+    //     fetch(`https://www.olx.in/items/q-${cardetail.model}?isSearchCall=true`)
+    //     .then(response => response.json())
+    //     .then(json => console.log(json))
     // };
 
+    const fetchOlxData = async () => {
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => response.json())
+  .then(json => console.log(json))
+    };
+
+    
 
 
 
@@ -121,13 +117,14 @@ const Cardetail = (car) => {
 
 
     const [expanded, setExpanded] = useState(false);
+    const [expanded1, setExpanded1] = useState(false);
     const [open, setOpen] = useState(false);
     const [openreport, setOpenreport] = useState(false);
     const [reportMessage, setReportMessage] = useState('');
 
 
     const handleReadMoreClick = async () => {
-        console.log("clicked")
+        console.log("read more clicked")
         const token = localStorage.getItem('token')
         // console.log(token)
         if (token) {
@@ -156,7 +153,7 @@ const Cardetail = (car) => {
             const user = membership.data;
             var newDate = new Date().toISOString();
             if (user.membership === true && user.membershipexpiry > newDate) {
-                setExpanded(!expanded);
+                setExpanded1(!expanded1);
             } else {
                 alert("You are not a member")
                 setOpen(true);
@@ -285,24 +282,9 @@ const Cardetail = (car) => {
                                 Fuel Type:  {cardetail.fuelType}
                             </Typography>
 
-                            <Typography gutterBottom variant="h6" >
-                                Registration State:  {cardetail.registrationState}
-                            </Typography>
-                            {/* <Typography gutterBottom variant="h6" >
-                                Price:  {cardetail.brand}
-                            </Typography>
-                            <Typography gutterBottom variant="body" >
-                                ownerDetails.email:  {ownerDetails.email}
-                            </Typography> */}
-
-
-
-
-
-
 
                             <Typography variant="body2" color="text.secondary">
-                                Small description about the car
+                                {cardetail.description}
                             </Typography>
 
                         </CardContent>
@@ -328,7 +310,64 @@ const Cardetail = (car) => {
 
                         <Collapse in={expanded} timeout="auto" unmountOnExit>
                             <CardContent>
-                                <Typography paragraph>Method:</Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Acceleration:  {cardetail.acceleration} sec
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Airbags:  {cardetail.airbags}
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Air-Conditioning:  {cardetail.airconditioning}
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Color:  {cardetail.color}
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Doors:  {cardetail.doors}
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Driving Range:  {cardetail.drivingrange} KM
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Engine:  {cardetail.engine} CC
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Milage:  {cardetail.milage}  KM
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Price:  {cardetail.price} INR
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Registration State:  {cardetail.registrationState} 
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Seats:  {cardetail.seats}
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Transmission Type:  {cardetail.transmissionType}
+                                </Typography>
+
+                                <Typography gutterBottom variant="h6" >
+                                    Owner Name:  {cardetail.ownerDetails.user.fullname}
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Owner Email:  {cardetail.ownerDetails.user.email}
+                                </Typography>
+                                <Typography gutterBottom variant="h6" >
+                                    Owner Mobile No.:  {cardetail.ownerDetails.user.mobilenumber}
+                                </Typography>
+                                
+                                
+
+
+
+
+
+
+
+
+
+
                             </CardContent>
                         </Collapse>
                     </Card>
@@ -350,7 +389,8 @@ const Cardetail = (car) => {
                     >
                         <Typography>Compare</Typography>
                     </AccordionSummary>
-                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    {/* <Collapse in={expanded} timeout="auto" unmountOnExit> */}
+                    <Collapse in={expanded1} timeout="auto" unmountOnExit>
                         <AccordionDetails>
                             <TableContainer component={Paper}>
                                 <Table sx={{ minWidth: 650 }} aria-label="simple table">

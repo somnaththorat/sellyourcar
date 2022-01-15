@@ -626,14 +626,14 @@ export const deleteCarFromReport = async (req, res) => {
 
 
 
-//search functionality
+//search functionality == done
 //add comparison of car price
 // add payment gateway
 
 
 //add alerts
 //change navbar
-//change expand button effect on car details page, accordion error
+//change expand button effect on car details page, accordion error - fixed
 //addcar payload too large error-> solved/ check again
 //update token in localstorage after update and sign in again
 
