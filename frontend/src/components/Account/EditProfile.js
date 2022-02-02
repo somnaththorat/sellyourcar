@@ -8,15 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { updateUser } from '../../api/Api';
 
 
-// const initialValue = {
-//     fullname: '',
-//     district: '',
-//     state: '',
-//     mobilenumber: '',
-//     email: '',
-//     username: '',
-//     password: '',
-// }
+
 
 
 const EditProfile = (userInfo) => {

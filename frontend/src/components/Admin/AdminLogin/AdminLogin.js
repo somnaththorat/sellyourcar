@@ -167,11 +167,11 @@ const AdminLogin = () => {
                 <Paper elevation={10} style={paperStyle}>
                     <Grid align="center">
                         <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
-                        <h2>SignIn</h2>
+                        <h2>Admin SignIn</h2>
                     </Grid>
                     <TextField onChange={(e) => onValueChange(e)} value={username} name="username" label="Username" placeholder="Enter Username" fullWidth required />
                     <TextField onChange={(e) => onValueChange(e)} value={password} name="password" label="Password" placeholder="Enter Password" type="password" fullWidth required />
-                    <FormControlLabel
+                    {/* <FormControlLabel
                         label="Remember me"
                         control={
                             <Checkbox
@@ -179,15 +179,15 @@ const AdminLogin = () => {
                                 color="primary"
                             />
                         }
-                    />
+                    /> */}
                     <Button type="submit" color="primary" variant="contained" style={btnStyle} fullWidth onClick={login}>Login</Button>
                     <Typography color="textSecondary">
-                        <Link to="/forgotpassword">Forgot Password</Link>
+                        <Link to="/admin/forgotpassword">Forgot Password</Link>
                     </Typography>
-                    <Typography color="textSecondary" >
+                    {/* <Typography color="textSecondary" >
                         Don't have an Account  ?
                         <Link to="/signup"> Sign Up</Link>
-                    </Typography>
+                    </Typography> */}
                 </Paper>
             </Grid>
         </>

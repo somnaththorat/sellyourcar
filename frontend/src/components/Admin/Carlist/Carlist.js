@@ -181,6 +181,7 @@
 
 
 import React, {useState, useEffect} from 'react';
+import { Button } from '@material-ui/core';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -192,6 +193,8 @@ import TableRow from '@mui/material/TableRow';
 import Grid from '@mui/material/Grid';
 import Navbar from '../AdminNavbar/AdminNavbar';
 import { fetchAllCars } from '../../../api/Api.js';
+import { getUserInfo, getCarInfo, deleteCarFromUser } from '../../../api/Api';
+
 
 
 
@@ -320,6 +323,24 @@ useEffect(() => {
 }, []);
 
 
+
+const deleteCar = async (car) => {
+  console.log("delete button clicked")
+  const res = await deleteCarFromUser(car);
+  if(res.data == "deleted"){
+    alert("Car deleted successfully");
+  }else{
+    alert("Car not deleted");
+  }
+    fetchallcars();
+}
+
+
+
+
+
+
+
 let srno = 1
   return (
       <>
@@ -360,6 +381,7 @@ let srno = 1
                         <TableCell>description</TableCell>
                         <TableCell>Price</TableCell>
                         <TableCell>Owner Name</TableCell>
+                        <TableCell>Action</TableCell>
 
             </TableRow>
           </TableHead>
@@ -369,27 +391,34 @@ let srno = 1
 
               
                 {cars.map((car) => (
-                    <TableRow >
-                        <TableCell>{srno++}</TableCell>
-                        {/* <TableCell>{car._id}</TableCell> */}
-                        <TableCell>{car.brand}</TableCell>
-                        <TableCell>{car.model}</TableCell>
-                        <TableCell>{car.engine } </TableCell>
-                        <TableCell>{car.fuelType}</TableCell>
-                        <TableCell>{car.transmissionType}</TableCell>
-                        <TableCell>{car.milage} /Ltr.</TableCell>
-                        <TableCell>{car.color}</TableCell>
-                        <TableCell>{car.doors}</TableCell>
-                        <TableCell>{car.seats}</TableCell>
-                        <TableCell>{car.airbags}</TableCell>
-                        <TableCell>{car.airconditioning  === true ? "Yes" :"No" }</TableCell>
-                        <TableCell>{car.acceleration} sec (0-100 KM/Hr)</TableCell>
-                        <TableCell>{car.drivingrange}</TableCell>
-                        <TableCell>{car.description}</TableCell>
-                        <TableCell>{car.price } RS</TableCell>
-                        <TableCell>{car.ownerDetails.user.fullname}</TableCell>
-                        </TableRow>
-                        ))}
+                  <TableRow >
+                    <TableCell>{srno++}</TableCell>
+                    {/* <TableCell>{car._id}</TableCell> */}
+                    <TableCell>{car.brand}</TableCell>
+                    <TableCell>{car.model}</TableCell>
+                    <TableCell>{car.engine } </TableCell>
+                    <TableCell>{car.fuelType}</TableCell>
+                    <TableCell>{car.transmissionType}</TableCell>
+                    <TableCell>{car.milage} /Ltr.</TableCell>
+                    <TableCell>{car.color}</TableCell>
+                    <TableCell>{car.doors}</TableCell>
+                    <TableCell>{car.seats}</TableCell>
+                    <TableCell>{car.airbags}</TableCell>
+                    <TableCell>{car.airconditioning  === true ? "Yes" :"No" }</TableCell>
+                    <TableCell>{car.acceleration} sec (0-100 KM/Hr)</TableCell>
+                    <TableCell>{car.drivingrange}</TableCell>
+                    <TableCell>{car.description}</TableCell>
+                    <TableCell>{car.price } RS</TableCell>
+                    <TableCell>{car.ownerDetails.user.fullname}</TableCell>
+                    <TableCell><Button
+                                            color="secondary"
+                                            variant="contained"
+                                            onClick={() => deleteCar(car)}
+                                        >
+                                            Delete
+                                        </Button></TableCell>
+                  </TableRow>
+                ))}
                         
 
           </TableBody>

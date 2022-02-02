@@ -3,7 +3,8 @@ import express from 'express';
 // import {getUser, getUserById, editUser, deleteUser} from '../controller/user.controller.js';
 import {addUser, authUser, getCars, addCar, getUserInfo, getCarInfo, editCar, updateUser,
      deleteCarOfUser, forgotPassword, resetPassword, membershipInfo, updateMembership, reportCarDetails,
-     authAdmin, getAllUsers, deleteUser, getAllCars, getAllReports, deleteReport, deleteCarFromReport} from '../controller/user.controller.js';
+     authAdmin, getAllUsers, deleteUser, getAllCars, getAllReports, deleteReport, deleteCarFromReport,
+     getAdminDetails, updateAdminDetails, forgotAdminPassword, resetAdminPassword} from '../controller/user.controller.js';
 import {uploadfile} from '../middleware/fileUpload.js';
 import Authenticate from '../middleware/authenticate.js';
 
@@ -40,6 +41,11 @@ route.get('/getcars', getAllCars);
 route.get('/getreports', getAllReports);
 route.delete('/deletereport/:id', deleteReport);
 route.delete('/deletecarfromreport/:id', deleteCarFromReport);
+route.get('/admininfo', getAdminDetails);
+route.put('/updateadmin', updateAdminDetails);
+route.post('/forgotadminpassword', forgotAdminPassword);
+route.post('/resetadminpassword', resetAdminPassword);
+
 
 
 

@@ -234,7 +234,7 @@ export const getUserInfo = async (req, res) => {
         // const user = await User.findById(decoded.user._id);
         const user = await User.findOne({ token: token });
 
-        console.log(user);
+        // console.log(user);
 
         //find cars of user using carId array
         // const carIdArray = user.carId;
@@ -624,6 +624,114 @@ export const deleteCarFromReport = async (req, res) => {
     }
 }
 
+export const getAdminDetails = async (req, res) => {
+    console.log("getAdminDetails controller entered");
+    const token = req.headers.token;
+    // console.log(token);
+    try {
+        const user = await Admin.findOne({ token: token });
+        // console.log("user is ", user);
+        if (user) {
+            res.json(user);
+        } else {
+            res.json("token not found");
+        }
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+export const updateAdminDetails = async (req, res) => {
+    console.log("updateAdminDetails controller entered");
+    const info = req.body;
+    console.log(info)
+    const id = info._id;
+    try{
+        const user = await Admin.findByIdAndUpdate(id, info)
+        res.json("updated");
+    }catch(error){
+        res.json({ message: error.message });
+    }
+}
+
+export const forgotAdminPassword = async (req, res) => {
+    console.log("forgotAdminPassword controller entered");
+    const email = req.body.email;
+    // console.log(req.body);
+    // console.log(email);
+    try {
+        const user = await Admin.findOne({ email: email });
+        // console.log(user);
+        if (user) {
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                port: 587,
+                secure: false, // true for 465, false for other ports  
+                auth: {
+                    user: 'aic.tsomnath@gmail.com',
+                    pass: '50mn47h@1398',
+                },
+            });
+            const token = user.token;// change this id for security purpose
+            // const token = jwt.sign({ user: user }, SECRET_KEY);
+            // console.log(token);
+            const url = `http://localhost:3000/resetAdminPassword/${token}`;
+            const mailOptions = {
+                from: '"Sell-Your-Car" <aic.tsomnath@gmail.com>',
+                to: email,
+                subject: "Reset Password",
+                html: `<h1>Reset Password</h1>
+                <p>Click on the link to reset your password</p>
+                <a href=${url}>Reset Password</a>`
+            };
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log("error", error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+            res.json("email sent");
+        } else {
+            res.json("email not found");
+        }
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
+
+
+
+export const resetAdminPassword = async (req, res) => {
+    console.log("resetPassword controller entered");
+    const info = req.body;
+    console.log(info);
+    const newPassword = info.password;
+    const token = info.token;
+    console.log(newPassword);
+    // console.log(token);
+    try {
+        const user = await Admin.findOne({ token: token });
+        // console.log(" user is ", user);
+        if (user) {
+            const userId = user._id;
+            // console.log(userId);
+            // const hashedPassword = await bcrypt.hash(newPassword, 10);
+            // console.log(hashedPassword);
+            await Admin.findByIdAndUpdate(userId, { password: newPassword });
+            const updatedUser = { _id: user._id, mobilenumber: user.mobilenumber, email: user.email, username: user.username, password: newPassword }
+            // console.log(updatedUser);
+            const updatedToken = jwt.sign({ user: updatedUser }, SECRET_KEY);
+            // console.log(updatedToken);
+            await Admin.findByIdAndUpdate(userId, { token: updatedToken });
+            res.json("password updated");
+        } else {
+            res.json("token not found");
+        }
+    } catch (error) {
+        res.json({ message: error.message });
+    }
+}
 
 
 //search functionality == done

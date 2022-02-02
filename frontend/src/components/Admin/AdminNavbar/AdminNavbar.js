@@ -34,6 +34,7 @@ const AdminNavbar = () => {
 
 
 
+
     const history = useHistory();
     const logout = () => {
         localStorage.removeItem('admintoken');
@@ -45,31 +46,6 @@ const AdminNavbar = () => {
 
 
 
-
-
-    // const [anchorElUser, setAnchorElUser] = React.useState(null);
-    // const userMenu = (e) => {
-    //     console.log('user menu');
-    //     setAnchorElUser(e.currentTarget);
-    // }
-
-    // const [anchorElNav, setAnchorElNav] = React.useState(null);
-    // const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-    // const handleOpenNavMenu = (event) => {
-    //     setAnchorElNav(event.currentTarget);
-    // };
-    // const handleOpenUserMenu = (event) => {
-    //     setAnchorElUser(event.currentTarget);
-    // };
-
-    // const handleCloseNavMenu = () => {
-    //     setAnchorElNav(null);
-    // };
-
-    // const handleCloseUserMenu = () => {
-    //     setAnchorElUser(null);
-    // };
 
 
 
@@ -87,7 +63,7 @@ const AdminNavbar = () => {
                 <ol>
                     {/* <li><NavLink to="/sellcar">SellCar</NavLink></li> */}
                     {/* {loggedIn ? <li><NavLink to="/sellcar">SellCar</NavLink></li> : <li><NavLink to="/login">SellCar</NavLink></li>} */}
-                    {loggedIn ? <li><NavLink to="/admin/account">Account</NavLink></li> : <li><NavLink to="/admin/login">Account</NavLink></li>}
+                    {loggedIn ? <li><NavLink to="/admin/profile" >Profile</NavLink></li> : <li><NavLink to="/admin/login">Account</NavLink></li>}
 
                     {loggedIn ? <li><NavLink to="/admin" onClick={logout}>Logout</NavLink></li> : <li><NavLink to="/admin/login" >Login</NavLink></li>}
                     

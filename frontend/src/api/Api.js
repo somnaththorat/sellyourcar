@@ -58,8 +58,6 @@ export const forgotPassword = async (email) => {
 }
 
 export const resetPassword = async (pass, token) => {
-    // console.log("api->new pass",pass);
-    // console.log("api-> token",token);
     return await axios.post(`${usersUrl}/resetpassword`, {password : pass, token : token} );
 }
 
@@ -99,4 +97,22 @@ export const deleteReport =async (id) => {
 
 export const deleteCar =async (id) => {
     return await axios.delete(`${usersUrl}/deletecarfromreport/${id}`)
+}
+
+export const getAdminDetails = async (token) => {
+    return await axios.get(`${usersUrl}/admininfo`, {headers: {token}} );
+}
+
+export const updateAdmin = async (user) => {
+    return await axios.put(`${usersUrl}/updateadmin`, user);
+}
+
+
+export const forgotAdminPassword = async (email) => {
+    // console.log("api->email",email);
+    return await axios.post(`${usersUrl}/forgotadminpassword`, {email : email} );
+}
+
+export const resetAdminPassword = async (pass, token) => {
+    return await axios.post(`${usersUrl}/resetadminpassword`, {password : pass, token : token} );
 }
