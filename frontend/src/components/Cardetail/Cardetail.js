@@ -222,8 +222,8 @@ const Cardetail = (car) => {
 
     return (
         <>
-            <Navbar />
-            <Grid container justify="space-between" spacing={2} style={{ padding: '30px', width: "100%", marginBottom: 'none', backgroundColor: "#7900FF" }} >
+            <Navbar style={{position:"sticky"}} />
+            <Grid container justify="space-between" spacing={2} style={{ padding: '30px', width: "100%", marginBottom: 'none', backgroundColor: "white" }} >
                 <Grid item xs={12} md={8} >
                     <Card container style={{ color: 'red', backgroundColor: '#f1f1f1' }} >
                         <CardMedia
@@ -289,7 +289,7 @@ const Cardetail = (car) => {
 
                         </CardContent>
                         <CardActions>
-                            <Button size="small" onClick={handleReadMoreClick}>Read More</Button>
+                            <Button style={{size: "small", color:"#C70A80", backgroundColor:"#A760FF", fontWeight: "bold"}} onClick={handleReadMoreClick}>Read More</Button>
                             {/* <Button size="small" onClick={handleOpen}>Read More</Button> */}
                         </CardActions>
                         <Modal
@@ -379,7 +379,7 @@ const Cardetail = (car) => {
             {/* accordion */}
             {/* compare cars */}
 
-            <Grid container item xs={12} md={12} style={{ backgroundColor: "#7900FF", paddingRight: '10px', marginTop: '-30px' }}>
+            <Grid container item xs={12} md={12} style={{ backgroundColor: "white", paddingRight: '10px', marginTop: '-30px' }}>
                 <Accordion onClick={handleAccordionExpandClick} style={{ margin: '30px', width: "100%", backgroundColor: "blue" }} >
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
@@ -387,7 +387,7 @@ const Cardetail = (car) => {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
-                        <Typography>Compare</Typography>
+                        <Typography style={{fontWeight: "bold"}}>Compare with other sites</Typography>
                     </AccordionSummary>
                     {/* <Collapse in={expanded} timeout="auto" unmountOnExit> */}
                     <Collapse in={expanded1} timeout="auto" unmountOnExit>
@@ -400,7 +400,7 @@ const Cardetail = (car) => {
                                             <TableCell align="right">SellYourCar</TableCell>
                                             <TableCell align="right">OLX</TableCell>
                                             <TableCell align="right">Carwale</TableCell>
-                                            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                                            <TableCell align="right">Cars24</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>

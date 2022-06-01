@@ -14,7 +14,7 @@ const CompareCars = () => {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
-                        <Typography>Compare</Typography>
+                        <Typography>Compare with other sites</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>

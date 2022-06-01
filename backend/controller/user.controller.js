@@ -679,7 +679,7 @@ export const forgotAdminPassword = async (req, res) => {
             const mailOptions = {
                 from: '"Sell-Your-Car" <aic.tsomnath@gmail.com>',
                 to: email,
-                subject: "Reset Password",
+                subject: "Reset Admin Password",
                 html: `<h1>Reset Password</h1>
                 <p>Click on the link to reset your password</p>
                 <a href=${url}>Reset Password</a>`
