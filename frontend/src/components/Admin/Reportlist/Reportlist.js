@@ -31,7 +31,7 @@ export default function Reportlist() {
     setPage(0);
   };
 
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
     const [report, setReport] = useState([]);
 
 
@@ -65,6 +65,9 @@ export default function Reportlist() {
         console.log()
         const responce = await deleteCar(id);
         alert(responce.data)
+        // if(responce.data !== "deleted") {
+        //   deletereport();
+        // }
         fetchallreports()
         console.log(responce.data);
     }
@@ -96,7 +99,7 @@ let srno = 1
 
               
                         <TableCell>Sr.No</TableCell>
-                        <TableCell>Username</TableCell>
+                        <TableCell>Username of reporter</TableCell>
                         <TableCell>car Id</TableCell>
                         <TableCell>Report Message</TableCell>
                         <TableCell>Action</TableCell>

@@ -105,9 +105,11 @@
 
 import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar.js';
-import { Grid, Paper, Avatar, TextField, Checkbox, Button } from '@material-ui/core';
+import { Grid, Paper, Avatar, TextField,
+    //  Checkbox, 
+     Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Link, useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { authUser } from '../../api/Api';
@@ -171,7 +173,7 @@ const Login = () => {
                     </Grid>
                     <TextField onChange={(e) => onValueChange(e)} value={username} name="username" label="Username" placeholder="Enter Username" fullWidth required />
                     <TextField onChange={(e) => onValueChange(e)} value={password} name="password" label="Password" placeholder="Enter Password" type="password" fullWidth required />
-                    <FormControlLabel
+                    {/* <FormControlLabel
                         label="Remember me"
                         control={
                             <Checkbox
@@ -179,7 +181,7 @@ const Login = () => {
                                 color="primary"
                             />
                         }
-                    />
+                    /> */}
                     <Button type="submit" color="primary" variant="contained" style={btnStyle} fullWidth onClick={login}>Login</Button>
                     <Typography color="textSecondary">
                         <Link to="/forgotpassword">Forgot Password</Link>

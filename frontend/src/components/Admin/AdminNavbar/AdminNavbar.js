@@ -12,7 +12,6 @@ import { NavLink, useHistory} from 'react-router-dom';
 
 
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
 const AdminNavbar = () => {
@@ -28,9 +27,11 @@ const AdminNavbar = () => {
         }
     };
 
+    
     useEffect(() => {
         tokenStatus();
     }, []);
+
 
 
 

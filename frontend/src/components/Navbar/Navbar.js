@@ -2,17 +2,9 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import './Navbar.css';
 import { NavLink, useHistory} from 'react-router-dom';
-import { Avatar, IconButton, MenuItem, Typography } from '@material-ui/core';
-import Box from '@mui/material/Box';
-import Tooltip from '@mui/material/Tooltip';
-import Menu from '@mui/material/Menu';
 
 
 
-
-
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
 const Navbar = () => {
@@ -61,7 +53,7 @@ const Navbar = () => {
         <>
             <input type="checkbox" id="check" />
             <nav style={{position: "sticky"}}>
-                <NavLink to="/" className="icon"><b style={{ color: 'red' }}>S</b>ell<b style={{ color: 'red' }}>C</b>ar</NavLink>
+                <NavLink to="/" className="icon"><span style={{ color: 'red' }}>S</span>ell<span style={{ color: 'red' }}>Y</span>our<span style={{ color: 'red' }}>C</span>ar</NavLink>
                 
                 <ol>
                     {/* <li><NavLink to="/sellcar">SellCar</NavLink></li> */}

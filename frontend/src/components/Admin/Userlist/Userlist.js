@@ -182,7 +182,7 @@ export default function Userlist() {
         setPage(0);
     };
 
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     const [users, setUsers] = useState([]);
 
 
@@ -200,7 +200,7 @@ export default function Userlist() {
     }, []);
 
     console.log("users ", users);
-    console.log("users membership", users._id);
+    console.log("users._id", users.fullname);
 
 
 

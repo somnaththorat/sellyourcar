@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Navbar from '../Navbar/Navbar.js';
 import { Grid, Paper, Avatar, TextField, Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { editCar } from '../../api/Api';
 import FileBase from 'react-file-base64';
 
@@ -48,7 +48,7 @@ const EditCarDetails = (car) => {
 
 
     // console.log(carImages);
-    let history = useHistory();
+    // let history = useHistory();
 
     const onValueChange = (e) => {
         // console.log(e.target.value);

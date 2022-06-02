@@ -121,7 +121,7 @@ import { Grid, Paper, Avatar, TextField, Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { addUser } from '../../api/Api';
 
 
@@ -151,13 +151,13 @@ const initialValue = {
 const Signup = () => {
 
 
-    const paperStyle = { padding: '20px', height: '80vh', width: 580, margin: '20px auto' }
+    const paperStyle = { padding: '20px', height: '90vh', width: 580, margin: '20px auto' }
     const avatarStyle = { backgroundColor: 'green' }
     const btnStyle = { margin: '20px auto' }
 
     const [user, setUser] = useState(initialValue);
     const { fullname, district, state, mobilenumber, email, username, password } = user;
-    let history = useHistory();
+    // let history = useHistory();
 
     const onValueChange = (e) => {
         // console.log(e.target.value);

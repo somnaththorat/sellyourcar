@@ -105,9 +105,9 @@
 
 import React, { useState } from 'react';
 import AdminNavbar from '../AdminNavbar/AdminNavbar';
-import { Grid, Paper, Avatar, TextField, Checkbox, Button } from '@material-ui/core';
+import { Grid, Paper, Avatar, TextField,  Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Link, useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { authAdmin } from '../../../api/Api.js';

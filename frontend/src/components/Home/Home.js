@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../Navbar/Navbar.js';
+// import Navbar from '../Navbar/Navbar.js';
 import { Grid } from '@material-ui/core';
 import CarList from './CarList';
 import { getCars } from '../../api/Api';
@@ -67,8 +67,8 @@ const Home = () => {
 
 
 
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    // const [anchorElNav, setAnchorElNav] = React.useState(null);
+    // const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [search, setSearch] = React.useState('');
 
    
@@ -90,7 +90,8 @@ const Home = () => {
         <>
             <input type="checkbox" id="check" />
             <nav style={{position: "sticky"}}>
-                <NavLink to="/" className="icon"><b style={{ color: 'red' }}>S</b>ell<b style={{ color: 'red' }}>C</b>ar</NavLink>
+                
+                <NavLink to="/" className="icon"><span style={{ color: 'red' }}>S</span>ell<span style={{ color: 'red' }}>Y</span>our<span style={{ color: 'red' }}>C</span>ar</NavLink>
                 <div className="search_box"  >
                     <input type="text" placeholder="Search Car" name="search" onChange={e=> setSearch(e.target.value)} />
                     <span className="fa fa-search" ></span>
@@ -112,7 +113,7 @@ const Home = () => {
             </nav>
             <Grid container spacing={1} style={{ padding: '50px', width: "100%" }}>
                 {cars.filter((val)=> {
-                    if(search == ""){
+                    if(search === ''){
                         return val;
                     }else if(val.brand.toLowerCase().includes(search.toLowerCase())){
                         return val;

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../AdminNavbar/AdminNavbar';
 import { Grid, Paper, Avatar, TextField, Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
+// import { Link } from 'react-router-dom';
+// import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
 import { getAdminDetails, updateAdmin } from '../../../api/Api';
 
@@ -35,7 +35,8 @@ const EditAdminProfile = () => {
     
     
     const [user, setUser] = useState(initialValue);
-    const { fullname, district, state, mobilenumber, email, username, password } = user;
+    const { mobilenumber, email, username, password } = user;
+    console.log(user); 
 
 
     const fetchAdminDetails = async () => {

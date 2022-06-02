@@ -5,7 +5,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path';
 
-
+ 
 var app = express();
 
 //added limit for image upload error/ payloadtoolarge error

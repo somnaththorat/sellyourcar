@@ -39,7 +39,7 @@ const initialValue = {
 
 const Sellcar = () => {
 
-    const paperStyle = { padding: '20px', height: '100vh', width: 580, margin: '20px auto' }
+    const paperStyle = { padding: '20px', height: '170vh', width: 580, margin: '20px auto' }
     const avatarStyle = { backgroundColor: 'green' }
 
     const [cardetail, setCardetail] = useState(initialValue);
@@ -73,7 +73,7 @@ const Sellcar = () => {
         console.log(cardetail);
        const responce = await addCar(cardetail);
        console.log("responce", responce.data)
-        // history.push('/');
+        history.push('/');
     }
 
     const clear = () => {

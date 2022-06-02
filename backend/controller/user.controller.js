@@ -613,11 +613,12 @@ export const deleteCarFromReport = async (req, res) => {
         console.log("report", report)
         const user = await User.findOne({carId: report.carId})
         console.log("user",user)
+        //delete car details from users cardetails array
         if (await User.findByIdAndUpdate(user._id, { $pull: { carId: report.carId } })) {
             console.log("update done")
         }
         await carDetail.findByIdAndDelete(report.carId);
-        await Report.deleteOne({reportid})
+        await Report.deleteMany({reportid})
         res.json("deleted");
     } catch (error) {
         res.json({ message: error.message });
@@ -647,6 +648,7 @@ export const updateAdminDetails = async (req, res) => {
     console.log(info)
     const id = info._id;
     try{
+        // console.log("info",info)
         const user = await Admin.findByIdAndUpdate(id, info)
         res.json("updated");
     }catch(error){
