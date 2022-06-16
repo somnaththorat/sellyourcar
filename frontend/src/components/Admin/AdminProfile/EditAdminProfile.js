@@ -36,20 +36,20 @@ const EditAdminProfile = () => {
     
     const [user, setUser] = useState(initialValue);
     const { mobilenumber, email, username, password } = user;
-    console.log(user); 
+    // console.log(user); 
 
 
     const fetchAdminDetails = async () => {
         const token = localStorage.getItem('admintoken');
-        console.log("token is ", token);
+        // console.log("token is ", token);
         const adminDetails = await getAdminDetails(token);
-        console.log("admin details", adminDetails.data);
+        // console.log("admin details", adminDetails.data);
         setUser(adminDetails.data);
     }
 
     useEffect(() => {
         fetchAdminDetails();
-    }, []);
+    },[]);
  
 
     let history = useHistory();

@@ -74,6 +74,19 @@ export const reportCarDetails = async (token, carId, reportMessage) => {
     return await axios.post(`${usersUrl}/reportcardetails`, {token: token, carId: carId, reportMessage: reportMessage});
 }
 
+export const payment = async (token) => {
+    return await axios.post(`${usersUrl}/payment`, {headers: token});
+}
+
+export const razorpay = async () => {
+    return await axios.post(`${usersUrl}/razorpay`);
+}
+
+export const addPaymentDetail = async (paymentDetails) => {
+    return await axios.post(`${usersUrl}/addpaymentdetail`, paymentDetails);
+}
+
+
 //admin apis
 export const authAdmin = async (adminLoginDetails) => {
     return await axios.post(`${usersUrl}/authadmin`, adminLoginDetails);
@@ -97,6 +110,10 @@ export const deleteReport =async (id) => {
 
 export const deleteCar =async (id) => {
     return await axios.delete(`${usersUrl}/deletecarfromreport/${id}`)
+}
+
+export const fetchAllPayment = async () => {
+    return await axios.get(`${usersUrl}/getpayments`);
 }
 
 export const getAdminDetails = async (token) => {

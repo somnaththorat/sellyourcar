@@ -164,7 +164,18 @@ import Grid from '@mui/material/Grid';
 import Navbar from '../AdminNavbar/AdminNavbar';
 import { fetchAllUsers, deleteUser } from '../../../api/Api.js';
 
+import { styled } from "@mui/material/styles";
+import { tableCellClasses } from "@mui/material/TableCell";
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+    }));
 
 
 
@@ -189,7 +200,7 @@ export default function Userlist() {
     const fetchallusers = async () => {
         const responce = await fetchAllUsers();
         // console.log(responce);
-        console.log(responce.data);
+        // console.log(responce.data);
         const allUsers = responce.data;
         setUsers(allUsers);
         // console.log(data);
@@ -197,10 +208,10 @@ export default function Userlist() {
 
     useEffect(() => {
         fetchallusers();
-    }, []);
+    },[]);
 
-    console.log("users ", users);
-    console.log("users._id", users.fullname);
+    // console.log("users ", users);
+    // console.log("users._id", users.fullname);
 
 
 
@@ -236,16 +247,16 @@ export default function Userlist() {
               ))} */}
 
 
-                                <TableCell>Sr.No</TableCell>
-                                <TableCell>Username</TableCell>
-                                <TableCell>FullName</TableCell>
-                                <TableCell>Address</TableCell>
-                                <TableCell>Email</TableCell>
-                                <TableCell>Phone</TableCell>
-                                <TableCell>Cars</TableCell>
-                                <TableCell>Membership</TableCell>
-                                <TableCell>Membership Expiry</TableCell>
-                                <TableCell>Action</TableCell>
+                                <StyledTableCell>Sr.No</StyledTableCell>
+                                <StyledTableCell>Username</StyledTableCell>
+                                <StyledTableCell>FullName</StyledTableCell>
+                                <StyledTableCell>Address</StyledTableCell>
+                                <StyledTableCell>Email</StyledTableCell>
+                                <StyledTableCell>Phone</StyledTableCell>
+                                <StyledTableCell>Cars</StyledTableCell>
+                                <StyledTableCell>Membership</StyledTableCell>
+                                <StyledTableCell>Membership Expiry</StyledTableCell>
+                                <StyledTableCell>Action</StyledTableCell>
 
                             </TableRow>
                         </TableHead>

@@ -11,6 +11,7 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+import NoCarAvailable from  '../../assets/img/noCarAvailable.jpg';
 
 import { useHistory } from 'react-router';
 
@@ -23,11 +24,11 @@ const MyCars = () => {
     const history = useHistory();
 
     const getInfoOfUser = async () => {
-        console.log("mycars.js - getUserInfo()");
+        // console.log("mycars.js - getUserInfo()");
         let token = localStorage.getItem('token');
         // console.log(token);
         const response = await getUserInfo(token);
-        console.log(response.data);
+        // console.log(response.data);
         setUserInfo(response.data);
 
 
@@ -35,10 +36,10 @@ const MyCars = () => {
 
         setCars([]);
         let carIds = response.data.carId;
-        console.log("carIds ", carIds);
+        // console.log("carIds ", carIds);
         if (carIds.length > 0) {
             const carResponse = await getCarInfo(carIds);
-            console.log("carResponce . data ", carResponse);
+            // console.log("carResponce . data ", carResponse);
             setCars(carResponse.data);
         }
     }
@@ -61,20 +62,20 @@ const MyCars = () => {
 
 
 
-    console.log("userInfo", userInfo);
-    console.log("userInfo-> carId", userInfo.carId);
-    console.log("cars", cars);
+    // console.log("userInfo", userInfo);
+    // console.log("userInfo-> carId", userInfo.carId);
+    // console.log("cars", cars);
     // console.log("userInfo-> carId",userInfo.carId);
 
 
     const handleClick = (car) => {
-        console.log("mycars.js - handleClick()");
-        console.log("car", car);
+        // console.log("mycars.js - handleClick()");
+        // console.log("car", car);
         history.push({ pathname: `/account/mycar/${car._id}`, state: { car: car } });
     }
 
     const deleteCar = async (car) => {
-        console.log("delete button clicked")
+        // console.log("delete button clicked")
         await deleteCarFromUser(car);
         console.log(cars.length);
         getInfoOfUser();
@@ -82,7 +83,7 @@ const MyCars = () => {
     }
 
     const editProfile = () => {
-        console.log("edit profile clicked");
+        // console.log("edit profile clicked");
         // console.log("userInfo", userInfo);
         history.push({ pathname: `/account/editprofile`, state: { userInfo: userInfo } });
     }
@@ -114,10 +115,9 @@ const MyCars = () => {
             </Box>
 
 
-
-
+           
             <Grid container spacing={1} style={{ padding: '50px', width: "100%" }}>
-                {cars.map((car) => (
+                {cars.length > 0 ? cars.map((car) => (
                     <Grid item xs={12} sm={4} >
                         <Card container style={{ backgroundColor: '#f1f1f1' }} >
                             <CardActionArea
@@ -153,7 +153,11 @@ const MyCars = () => {
                         </Card>
 
                     </Grid>
-                ))}
+                ))
+                    : 
+                    // <h1 align="center">No cars to show</h1>
+                    <img src={NoCarAvailable} alt="No Car Available" style = {{width:'100%', height:'400px' }}/>
+                    }
             </Grid>
         </>
     )

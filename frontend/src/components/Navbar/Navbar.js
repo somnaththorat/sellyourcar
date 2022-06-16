@@ -15,7 +15,7 @@ const Navbar = () => {
     
     const tokenStatus = () => {
         let response = localStorage.getItem('token');
-        console.log(response);
+        // console.log(response);
         if (response !== null) {
             setLoggedIn(true);
         }

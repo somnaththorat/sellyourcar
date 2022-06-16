@@ -1,185 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-// import { fetchAllUsers, deleteUser, fetchAllCars } from '../../../api/Api.js';
-// import Navbar from '../AdminNavbar/AdminNavbar';
-// import {
-//     Table,
-//     TableHead,
-//     TableCell,
-//     TableRow,
-//     Button,
-//     TableBody,
-//     makeStyles,
-// } from "@material-ui/core";
-// import { Link } from "react-router-dom";
-
-// const useStyles = makeStyles({
-//     table: {
-//         width: "90%",
-//         margin: "50px 0 0 50px",
-//     },
-//     thead: {
-//         "& > *": {
-//             fontSize: 20,
-//             background: "#000000",
-//             color: "#FFFFFF",
-//         },
-//     },
-//     row: {
-//         "& > *": {
-//             fontSize: 18,
-//         },
-//     },
-// });
-
-
-
-
-// const Carlist = () => {
-
-    // const [cars, setCars] = useState([]);
-    // const classes = useStyles();
-
-
-    // const fetchallcars = async () => {
-    //     const responce = await fetchAllCars();
-    //     // console.log(responce);
-    //     console.log(responce.data);
-    //     const cars = responce.data;
-    //     setCars( cars );
-    //     // console.log(data);
-    // }
-
-    // useEffect(() => {
-    //     fetchallcars();
-    // }, []);
-
-//     console.log("cars ", cars);
-
-
-
-//     const deleteuser = async (id) => {
-//         console.log("delete user id ", id);
-//         const responce = await deleteUser(id)
-//         console.log(responce.data);
-//     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     let sr_no = 1;
-
-
-
-//     return (
-//         <>
-//         <Navbar/>
-//         <Table className={classes.table}>
-//                 <TableHead>
-//                     <TableRow className={classes.thead}>
-//                         <TableCell>Sr.No.</TableCell>
-//                         {/* <TableCell>UserId</TableCell> */}
-//                         <TableCell>Car Brand</TableCell>
-//                         <TableCell>Car Model</TableCell>
-//                         <TableCell>Engine</TableCell>
-//                         <TableCell>Fuel Type</TableCell>
-//                         <TableCell>transmission Type</TableCell>
-//                         <TableCell>Milage</TableCell>
-//                         <TableCell>Color</TableCell>
-//                         <TableCell>door</TableCell>
-//                         <TableCell>Seats</TableCell>
-//                         <TableCell>airbag</TableCell>
-//                         <TableCell>AC</TableCell>
-//                         <TableCell>Acceleration</TableCell>
-//                         <TableCell>Driving range</TableCell>
-//                         <TableCell>description</TableCell>
-//                         <TableCell>Price</TableCell>
-//                         <TableCell>Owner</TableCell>
-
-//                         <TableCell>Action</TableCell>
-//                     </TableRow>
-//                 </TableHead>
-//                 <TableBody>
-                    // {cars.map((car) => (
-                    //     <TableRow className={classes.row}>
-                    //         <TableCell>{sr_no++}</TableCell>
-                    //         {/* <TableCell>{car._id}</TableCell> */}
-                    //         <TableCell>{car.brand}</TableCell>
-                    //         <TableCell>{car.model}</TableCell>
-                    //         <TableCell>{car.engine } </TableCell>
-                    //         <TableCell>{car.fuelType}</TableCell>
-                    //         <TableCell>{car.transmissionType}</TableCell>
-                    //         <TableCell>{car.milage}</TableCell>
-                    //         <TableCell>{car.color}</TableCell>
-                    //         <TableCell>{car.door}</TableCell>
-                    //         <TableCell>{car.seats}</TableCell>
-                    //         <TableCell>{car.airbag}</TableCell>
-                    //         <TableCell>{car.airconditioning}</TableCell>
-                    //         <TableCell>{car.acceleration}</TableCell>
-                    //         <TableCell>{car.drivingRange}</TableCell>
-                    //         <TableCell>{car.description}</TableCell>
-                    //         <TableCell>{car.price}</TableCell>
-                    //         <TableCell>{car.milage}</TableCell>
-                            
-//                             <TableCell>
-//                                 {/* <Button
-//                                     color="primary"
-//                                     variant="contained"
-//                                     style={{ marginRight: 10 }}
-//                                     component={Link}
-//                                     to={`/edit/${user._id}`}
-//                                 >
-//                                     Edit
-//                                 </Button>{" "} */}
-//                                 {/* change it to user.id to use JSON Server */}
-//                                 <Button
-//                                     color="secondary"
-//                                     variant="contained"
-//                                     // onClick={() =>  deleteuser(user._id)}
-//                                 >
-//                                     Delete
-//                                 </Button>{" "}
-//                             </TableCell>
-//                         </TableRow>
-//                     ))}
-//                 </TableBody>
-//             </Table>
-//         </>
-//     )
-// }
-
-// export default Carlist;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import React, {useState, useEffect} from 'react';
 import { Button } from '@material-ui/core';
 import Paper from '@mui/material/Paper';
@@ -201,7 +19,18 @@ import {
 
 
 
+import { styled } from "@mui/material/styles";
+import { tableCellClasses } from "@mui/material/TableCell";
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+    }));
 
 
 
@@ -235,15 +64,15 @@ export default function Carlist() {
 const fetchallcars = async () => {
     const responce = await fetchAllCars();
     // console.log(responce);
-    console.log(responce.data);
+    // console.log(responce.data);
     const car = responce.data;
     setCars( car );
-    console.log(cars);
+    // console.log(cars);
 }
 
 useEffect(() => {
     fetchallcars();
-}, []);
+},[]);
 
 
 
@@ -287,24 +116,24 @@ let srno = 1
               ))} */}
 
               
-                        <TableCell>Sr.No</TableCell>
-                        <TableCell>Car Brand</TableCell>
-                        <TableCell>Car Model</TableCell>
-                        <TableCell>Engine</TableCell>
-                        <TableCell>Fuel Type</TableCell>
-                        <TableCell>transmission Type</TableCell>
-                        <TableCell>Milage</TableCell>
-                        <TableCell>Color</TableCell>
-                        <TableCell>door</TableCell>
-                        <TableCell>Seats</TableCell>
-                        <TableCell>airbag</TableCell>
-                        <TableCell>AC</TableCell>
-                        <TableCell>Acceleration</TableCell>
-                        <TableCell>Driving range</TableCell>
-                        <TableCell>description</TableCell>
-                        <TableCell>Price</TableCell>
-                        <TableCell>Owner Name</TableCell>
-                        <TableCell>Action</TableCell>
+                        <StyledTableCell>Sr.No</StyledTableCell>
+                        <StyledTableCell>Car Brand</StyledTableCell>
+                        <StyledTableCell>Car Model</StyledTableCell>
+                        <StyledTableCell>Engine</StyledTableCell>
+                        <StyledTableCell>Fuel Type</StyledTableCell>
+                        <StyledTableCell>transmission Type</StyledTableCell>
+                        <StyledTableCell>Milage</StyledTableCell>
+                        <StyledTableCell>Color</StyledTableCell>
+                        <StyledTableCell>door</StyledTableCell>
+                        <StyledTableCell>Seats</StyledTableCell>
+                        <StyledTableCell>airbag</StyledTableCell>
+                        <StyledTableCell>AC</StyledTableCell>
+                        <StyledTableCell>Acceleration</StyledTableCell>
+                        <StyledTableCell>Driving range</StyledTableCell>
+                        <StyledTableCell>description</StyledTableCell>
+                        <StyledTableCell>Price</StyledTableCell>
+                        <StyledTableCell>Owner Name</StyledTableCell>
+                        <StyledTableCell>Action</StyledTableCell>
 
             </TableRow>
           </TableHead>

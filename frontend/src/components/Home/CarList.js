@@ -55,7 +55,7 @@ export default function CarList({ car }) {
   const history = useHistory();
 
   const handleClick = async () => {
-    console.log("handle click " + car._id);
+    // console.log("handle click " + car._id);
     // history.push("/cardetails/"+car._id);
 
     history.push({ pathname: "/cardetails", state: { car: car } });

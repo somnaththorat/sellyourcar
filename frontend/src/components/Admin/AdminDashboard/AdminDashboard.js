@@ -28,8 +28,8 @@ const AdminDashboard = () => {
 
 
 
-            <Grid container justify="space-between" spacing={2} style={{ padding: '30px', width: "100%", marginBottom: 'none', backgroundColor: "#7900FF" }} >
-                <Grid item xs={12} md={4}  >
+            <Grid container justify="space-between" spacing={3} style={{ padding: '30px', width: "100p%", marginBottom: 'none', backgroundColor: '#7900FF' }} >
+                <Grid item xs={12} md={3}  >
                     <Card style={{ backgroundColor: '#757ce8' }} >
                     <CardActionArea onClick={() => { history.push("/admin/users"); }} >
                             <CardContent>
@@ -43,7 +43,7 @@ const AdminDashboard = () => {
                         </CardActionArea>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4}  >
+                <Grid item xs={12} md={3}  >
                     <Card style={{ backgroundColor: '#757ce8' }} >
                         <CardActionArea onClick={() => { history.push("/admin/cars"); }} >
                             <CardContent>
@@ -57,7 +57,7 @@ const AdminDashboard = () => {
                         </CardActionArea>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={4}  >
+                <Grid item xs={12} md={3}  >
                     <Card style={{ backgroundColor: '#757ce8' }} >
                     <CardActionArea onClick={() => { history.push("/admin/carreports"); }} >
                             <CardContent>
@@ -66,6 +66,20 @@ const AdminDashboard = () => {
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
                                    List of all Car Reports
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} md={3}  >
+                    <Card style={{ backgroundColor: '#757ce8' }} >
+                    <CardActionArea onClick={() => { history.push("/admin/payment"); }} >
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="div">
+                                    Payment
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                   List of all Payment details
                                 </Typography>
                             </CardContent>
                         </CardActionArea>

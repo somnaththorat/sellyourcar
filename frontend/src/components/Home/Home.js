@@ -22,7 +22,7 @@ const Home = () => {
 
     //reverse cars array
     const cars = [...cars2].reverse();
-    console.log(cars);
+    // console.log(cars);
 
 
 
@@ -39,7 +39,7 @@ const Home = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const tokenStatus = () => {
         let response = localStorage.getItem('token');
-        console.log(response);
+        // console.log(response);
         if (response !== null) {
             setLoggedIn(true);
         }
@@ -47,7 +47,7 @@ const Home = () => {
 
     useEffect(() => {
         tokenStatus();
-    }, []);
+    });
 
 
    //add search functionality

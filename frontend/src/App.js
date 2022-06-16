@@ -26,6 +26,7 @@ import AdminDashboard from './components/Admin/AdminDashboard/AdminDashboard';
 import Userlist from './components/Admin/Userlist/Userlist';
 import Carlist from './components/Admin/Carlist/Carlist';
 import Reportlist from './components/Admin/Reportlist/Reportlist'
+import Paymentlist from './components/Admin/Paymentlist/Paymentlist'
 import EditAdminProfile from './components/Admin/AdminProfile/EditAdminProfile'; 
 import ResetAdminPassword from './components/Admin/AdminResetPassword/AdminResetPassword';
 
@@ -56,6 +57,7 @@ function App() {
         <Route exact path="/admin/users" component={Userlist} />
         <Route exact path="/admin/cars" component={Carlist} />
         <Route exact path="/admin/carreports" component={Reportlist} />
+        <Route exact path="/admin/payment" component={Paymentlist} />
         <Route exact path="/admin/profile" component={EditAdminProfile} />
         <Route exact path="/resetAdminPassword/:id" component={ResetAdminPassword} />
         <Route exact path="/admin/forgotPassword" component={AdminForgotPassword} />

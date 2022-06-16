@@ -14,7 +14,18 @@ import Navbar from '../AdminNavbar/AdminNavbar';
 import { deleteReport, fetchAllReports, deleteCar } from '../../../api/Api.js';
 
 
+import { styled } from "@mui/material/styles";
+import { tableCellClasses } from "@mui/material/TableCell";
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+    }));
 
 
 
@@ -46,9 +57,9 @@ export default function Reportlist() {
 
     useEffect(() => {
         fetchallreports();
-    }, []);
+    },[]);
 
-    console.log("report ", report);
+    // console.log("report ", report);
     
 
 
@@ -98,11 +109,11 @@ let srno = 1
               ))} */}
 
               
-                        <TableCell>Sr.No</TableCell>
-                        <TableCell>Username of reporter</TableCell>
-                        <TableCell>car Id</TableCell>
-                        <TableCell>Report Message</TableCell>
-                        <TableCell>Action</TableCell>
+                        <StyledTableCell>Sr.No</StyledTableCell>
+                        <StyledTableCell>Username of reporter</StyledTableCell>
+                        <StyledTableCell>car Id</StyledTableCell>
+                        <StyledTableCell>Report Message</StyledTableCell>
+                        <StyledTableCell>Action</StyledTableCell>
 
             </TableRow>
           </TableHead>

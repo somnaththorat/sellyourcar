@@ -19,7 +19,7 @@ const AdminNavbar = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const tokenStatus = () => {
         let response = localStorage.getItem('admintoken');
-        console.log(response);
+        // console.log(response);
         if (response !== null) {
             setLoggedIn(true);
         }else{
@@ -30,7 +30,7 @@ const AdminNavbar = () => {
     
     useEffect(() => {
         tokenStatus();
-    }, []);
+    });
 
 
 

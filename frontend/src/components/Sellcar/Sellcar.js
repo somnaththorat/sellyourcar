@@ -39,7 +39,7 @@ const initialValue = {
 
 const Sellcar = () => {
 
-    const paperStyle = { padding: '20px', height: '170vh', width: 580, margin: '20px auto' }
+    const paperStyle = { padding: '20px', height: '160vh', width: 580, margin: '20px auto' }
     const avatarStyle = { backgroundColor: 'green' }
 
     const [cardetail, setCardetail] = useState(initialValue);
@@ -93,24 +93,24 @@ const Sellcar = () => {
                     </Grid>
                     {/* <form action="http://localhost:4000/users/addcar" method="post" encType="multipart/form-data"> */}
 
-                    <TextField onChange={(e) => onValueChange(e)} name="brand" vaariant="outlined" label="brand" value={brand} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="model" vaariant="outlined" label="model" value={model} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="registrationYear" vaariant="outlined" label="registrationYear" value={registrationYear} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="fuelType" vaariant="outlined" label="fuelType" value={fuelType} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="transmissionType" vaariant="outlined" label="transmissionType" value={transmissionType} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="registrationState" vaariant="outlined" label="registrationState" value={registrationState} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="price" vaariant="outlined" label="price" value={price} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="engine" vaariant="outlined" label="engine" value={engine} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="milage" vaariant="outlined" label="milage" value={milage} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="color" vaariant="outlined" label="color" value={color} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="doors" vaariant="outlined" label="doors" value={doors} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="seats" vaariant="outlined" label="seats" value={seats} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="airbags" vaariant="outlined" label="airbags" value={airbags} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="airconditioning" vaariant="outlined" label="air-conditioning" value={airconditioning} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="acceleration" vaariant="outlined" label="acceleration" value={acceleration} fullWidth />
-                    <TextField onChange={(e) => onValueChange(e)} name="drivingrange" vaariant="outlined" label="driving-range" value={drivingrange} fullWidth />
+                    <TextField onChange={(e) => onValueChange(e)} name="brand" vaariant="outlined" label="Brand" value={brand} fullWidth  />
+                    <TextField onChange={(e) => onValueChange(e)} name="model" vaariant="outlined" label="Model" value={model} fullWidth />
+                    <TextField onChange={(e) => onValueChange(e)} name="registrationYear" vaariant="outlined" label="Registration Year" value={registrationYear} fullWidth  />
+                    <TextField onChange={(e) => onValueChange(e)} name="fuelType" vaariant="outlined" label="Fuel Type" value={fuelType} fullWidth placeholder='Petrol/ Diesel/ CNG/ Electric' />
+                    <TextField onChange={(e) => onValueChange(e)} name="transmissionType" vaariant="outlined" label="Transmission Type" value={transmissionType} fullWidth placeholder='Automatic / manual'/>
+                    <TextField onChange={(e) => onValueChange(e)} name="registrationState" vaariant="outlined" label="Registration State" value={registrationState} fullWidth />
+                    <TextField onChange={(e) => onValueChange(e)} name="price" vaariant="outlined" label="Price" value={price} fullWidth placeholder='in Rupees'/>
+                    <TextField onChange={(e) => onValueChange(e)} name="engine" vaariant="outlined" label="Engine" value={engine} fullWidth  placeholder='CC'/>
+                    <TextField onChange={(e) => onValueChange(e)} name="milage" vaariant="outlined" label="Milage" value={milage} fullWidth placeholder='Km/Litre'/>
+                    <TextField onChange={(e) => onValueChange(e)} name="color" vaariant="outlined" label="Color" value={color} fullWidth />
+                    <TextField onChange={(e) => onValueChange(e)} name="doors" vaariant="outlined" label="Doors" value={doors} fullWidth placeholder='Count'/>
+                    <TextField onChange={(e) => onValueChange(e)} name="seats" vaariant="outlined" label="Seats" value={seats} fullWidth />
+                    <TextField onChange={(e) => onValueChange(e)} name="airbags" vaariant="outlined" label="Airbags" value={airbags} fullWidth placeholder='Count'/>
+                    <TextField onChange={(e) => onValueChange(e)} name="airconditioning" vaariant="outlined" label="Air-conditioning" value={airconditioning} fullWidth placeholder='YES / NO'/>
+                    <TextField onChange={(e) => onValueChange(e)} name="acceleration" vaariant="outlined" label="Acceleration" value={acceleration} fullWidth  placeholder='0 KM TO 100 KM IN SECONDS'/>
+                    <TextField onChange={(e) => onValueChange(e)} name="drivingrange" vaariant="outlined" label="Driving-range" value={drivingrange} fullWidth placeholder='Estimated distance / Full fuel Tank'/>
                     {/* <TextField onChange={(e) => onValueChange(e)} name="owner" vaariant="outlined" label="owner" value={owner} fullWidth  disable/> */}
-                    <TextField onChange={(e) => onValueChange(e)} name="description" vaariant="outlined" label="description" value={description} fullWidth />
+                    <TextField onChange={(e) => onValueChange(e)} name="description" vaariant="outlined" label="Description" value={description} fullWidth />
 
 
 

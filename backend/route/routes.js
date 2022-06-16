@@ -4,7 +4,8 @@ import express from 'express';
 import {addUser, authUser, getCars, addCar, getUserInfo, getCarInfo, editCar, updateUser,
      deleteCarOfUser, forgotPassword, resetPassword, membershipInfo, updateMembership, reportCarDetails,
      authAdmin, getAllUsers, deleteUser, getAllCars, getAllReports, deleteReport, deleteCarFromReport,
-     getAdminDetails, updateAdminDetails, forgotAdminPassword, resetAdminPassword} from '../controller/user.controller.js';
+     getAdminDetails, updateAdminDetails, forgotAdminPassword, resetAdminPassword, payment, razorpay, addPaymentDetail, getAllPayments
+} from '../controller/user.controller.js';
 import {uploadfile} from '../middleware/fileUpload.js';
 import Authenticate from '../middleware/authenticate.js';
 
@@ -41,10 +42,16 @@ route.get('/getcars', getAllCars);
 route.get('/getreports', getAllReports);
 route.delete('/deletereport/:id', deleteReport);
 route.delete('/deletecarfromreport/:id', deleteCarFromReport);
+route.get('/getpayments', getAllPayments);
 route.get('/admininfo', getAdminDetails);
 route.put('/updateadmin', updateAdminDetails);
 route.post('/forgotadminpassword', forgotAdminPassword);
 route.post('/resetadminpassword', resetAdminPassword);
+
+route.post('/payment', payment);
+route.post('/razorpay', razorpay);
+route.post('/addpaymentdetail', addPaymentDetail);
+
 
 
 

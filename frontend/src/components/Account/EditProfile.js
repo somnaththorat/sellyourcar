@@ -43,8 +43,8 @@ const EditProfile = (userInfo) => {
 
 
     const updateUserDetails = async () => {
-        console.log("clicked");
-        console.log(user);
+        // console.log("clicked");
+        // console.log(user);
         const responce = await updateUser(user);
         if(responce.data === "updated"){
             alert("User details updated successfully, Login Again")
