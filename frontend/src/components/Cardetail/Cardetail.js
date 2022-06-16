@@ -4,7 +4,12 @@ import {
   membershipInfo,
   updateMembership,
   reportCarDetails,
+  // payment,
+  razorpay,
+  getUserInfo,
+  addPaymentDetail,
 } from "../../api/Api.js";
+import carImage from "../../assets/img/carIcon.png";
 // import axios from 'axios';
 import { Grid } from "@material-ui/core";
 import { Card, CardMedia } from "@material-ui/core";
@@ -88,6 +93,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 //     }),
 // }));
 
+const loadScript = async (src) => {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+    document.body.appendChild(script);
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+};
+
 const Cardetail = (car) => {
   // const [cardetail, setCardetails] = useState(car.location.state.car);
   const cardetail = car.location.state.car;
@@ -102,7 +122,7 @@ const Cardetail = (car) => {
   const olxUrl = `https://www.olx.in/items/q-${cardetail.model}?isSearchCall=true`;
   console.log(olxUrl);
   useEffect(() => {
-    fetchOlxData();
+    // fetchOlxData();
   }, []);
 
   // const fetchOlxData = async () => {
@@ -111,21 +131,27 @@ const Cardetail = (car) => {
   //     .then(json => console.log(json))
   // };
 
-  const fetchOlxData = async () => {
-    fetch("https://jsonplaceholder.typicode.com/todos/1")
-      .then((response) => response.json())
-      .then((json) => console.log(json));
-  };
+  // const fetchOlxData = async () => {
+  //   fetch("https://jsonplaceholder.typicode.com/todos/1")
+  //     .then((response) => response.json())
+  //     .then((json) => console.log(json));
+  // };
 
   function createDescriptionData(property, value) {
     return { property, value };
   }
 
   const rows2 = [
-    createDescriptionData("Acceleration (0-100 km/hr) ", cardetail.acceleration + " sec"),
+    createDescriptionData(
+      "Acceleration (0-100 km/hr) ",
+      cardetail.acceleration + " sec"
+    ),
     createDescriptionData("Airbags ", cardetail.airbags),
-    createDescriptionData("Air-Conditioning", cardetail.airconditioning ? "Yes" : "No"),
-    createDescriptionData("color",cardetail.color ),
+    createDescriptionData(
+      "Air-Conditioning",
+      cardetail.airconditioning ? "Yes" : "No"
+    ),
+    createDescriptionData("color", cardetail.color),
     createDescriptionData("doors", cardetail.doors),
     createDescriptionData("driving Range", cardetail.drivingrange + " km"),
     createDescriptionData("Engine", cardetail.engine + "cc"),
@@ -212,16 +238,22 @@ const Cardetail = (car) => {
     setOpenreport(false);
   };
 
-  const getmembership = async () => {
+  const getmembership = async (paymentDetails) => {
     console.log(" get membership clicked");
     const token = localStorage.getItem("token");
     // console.log(token)
+
+    // payment api is paytm gateway
+    // const makePayment = await payment(token);
+
+    const addPaymentDetails = await addPaymentDetail(paymentDetails);
+    console.log("addPaymentDetails", addPaymentDetails);
+
     const response = await updateMembership(token);
-    // console.log(response)
-    // console.log(response.data)
     if (response.data === "membership updated") {
       setOpen(false);
       alert("congrats!! You are a premium member now. ");
+      window.location.reload();
     }
   };
 
@@ -251,6 +283,59 @@ const Cardetail = (car) => {
     if (response.data === "car reported") {
       alert("car report added successfully");
     }
+  };
+
+  const displayRazorPay = async () => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+    if (!res) {
+      alert("Razorpay failed to load");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    const userData = await getUserInfo(token);
+    const userInfo = userData.data;
+    const paymentData = await razorpay();
+    console.log(paymentData.data);
+
+    const options = {
+      key: "rzp_test_ZlmqeEsQ5H3qpM", // Enter the Key ID generated from the Dashboard
+      amount: paymentData.data.responce.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: paymentData.data.responce.currency,
+      name: "SellYourCar.com",
+      description: "Membership for 1 year on SellYourCar.com",
+      image: carImage,
+      // "order_id": "order_9A33XWu170gUtm", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: function (response) {
+        alert(response.razorpay_payment_id);
+        // alert(response.razorpay_order_id);
+        // alert(response.razorpay_signature)
+        console.log({ response });
+        const paymentDetails = {
+          username: userInfo.username,
+          mobilenumber: userInfo.mobilenumber,
+          paymentId: response.razorpay_payment_id,
+          email: userInfo.email,
+          amount: paymentData.data.responce.amount,
+        };
+        getmembership(paymentDetails);
+      },
+      prefill: {
+        name: userInfo.fullname,
+        email: userInfo.email,
+        contact: userInfo.mobilenumber,
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    const paymentObect = new window.Razorpay(options);
+    paymentObect.open();
   };
 
   return (
@@ -324,8 +409,6 @@ const Cardetail = (car) => {
                 Registration Year: {cardetail.registrationYear}
               </Typography>
 
-              
-
               <Typography gutterBottom variant="h6">
                 Fuel Type: {cardetail.fuelType}
               </Typography>
@@ -358,10 +441,10 @@ const Cardetail = (car) => {
                 <h2 id="parent-modal-title">You want to get membership?</h2>
                 <br></br>
                 <p id="parent-modal-description">
-                  Pay Rs.500/- and get membership for 1 year
+                  Pay Rs.499/- and get membership for 1 year
                 </p>
                 <br></br>
-                <Button size="small" onClick={getmembership}>
+                <Button size="small" onClick={displayRazorPay}>
                   Get Membership
                 </Button>
               </Box>
@@ -369,53 +452,6 @@ const Cardetail = (car) => {
 
             <Collapse in={expanded} timeout="auto" unmountOnExit>
               <CardContent>
-                {/* <Typography gutterBottom variant="h6">
-                  Acceleration: {cardetail.acceleration} sec
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Airbags: {cardetail.airbags}
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Air-Conditioning: {cardetail.airconditioning}
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Color: {cardetail.color}
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Doors: {cardetail.doors}
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Driving Range: {cardetail.drivingrange} KM
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Engine: {cardetail.engine} CC
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Milage: {cardetail.milage} KM
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Price: {cardetail.price} INR
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Registration State: {cardetail.registrationState}
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Seats: {cardetail.seats}
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Transmission Type: {cardetail.transmissionType}
-                </Typography>
-
-                <Typography gutterBottom variant="h6">
-                  Owner Name: {cardetail.ownerDetails.user.fullname}
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Owner Email: {cardetail.ownerDetails.user.email}
-                </Typography>
-                <Typography gutterBottom variant="h6">
-                  Owner Mobile No.: {cardetail.ownerDetails.user.mobilenumber}
-                </Typography> */}
-
                 <TableContainer component={Paper}>
                   <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
@@ -493,7 +529,7 @@ const Cardetail = (car) => {
                   <TableHead>
                     <TableRow>
                       <TableCell>
-                        <h3>{cardetail.model}</h3>
+                        <h2>{cardetail.brand} ( {cardetail.model} )</h2>
                       </TableCell>
                       <TableCell align="right">SellYourCar</TableCell>
                       <TableCell align="right">OLX</TableCell>
