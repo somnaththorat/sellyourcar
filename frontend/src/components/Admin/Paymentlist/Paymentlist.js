@@ -62,7 +62,7 @@ export default function Paymentlist() {
 
   useEffect(() => {
     fetchallpayments();
-  },[]);
+  }, []);
 
   // console.log("report ", report);
   // console.log("payment ", payment);

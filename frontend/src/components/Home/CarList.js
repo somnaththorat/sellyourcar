@@ -1,15 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 // import { NavLink } from 'react-router-dom';
-import { CardActionArea } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-
-
-
+import { CardActionArea } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 // import { makeStyles } from '@material-ui/core';
 
@@ -45,10 +42,7 @@ import { useHistory } from 'react-router-dom';
 // });
 
 export default function CarList({ car }) {
-
   // const classes = useStyle();
-
-
 
   // console.log('cardetail page');
   // console.log(car);
@@ -59,14 +53,16 @@ export default function CarList({ car }) {
     // history.push("/cardetails/"+car._id);
 
     history.push({ pathname: "/cardetails", state: { car: car } });
-
-  }
+  };
 
   return (
     <>
-    
-      <Card container style={{ backgroundColor: '#f1f1f1' }} car={car}>
-        <CardActionArea onClick={() => { handleClick(car); }} >
+      <Card container style={{ backgroundColor: "#f1f1f1" }} car={car}>
+        <CardActionArea
+          onClick={() => {
+            handleClick(car);
+          }}
+        >
           <CardMedia
             component="img"
             height="240"

@@ -47,6 +47,11 @@ import Modal from "@mui/material/Modal";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 
+// import puppeteer
+
+
+
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -157,9 +162,9 @@ const Cardetail = (car) => {
     createDescriptionData("Engine", cardetail.engine + "cc"),
     createDescriptionData("Milage", cardetail.milage),
     createDescriptionData("price", cardetail.price + " Rs"),
-    createDescriptionData("Registration State", cardetail.milage),
-    createDescriptionData("seats", cardetail.milage),
-    createDescriptionData("transmission Type", cardetail.milage),
+    createDescriptionData("Registration State", cardetail.registrationState),
+    createDescriptionData("seats", cardetail.seats),
+    createDescriptionData("transmission Type", cardetail.transmissionType),
     createDescriptionData("Owner Name", cardetail.ownerDetails.user.fullname),
     createDescriptionData("Owner Email", cardetail.ownerDetails.user.email),
     createDescriptionData(
@@ -457,14 +462,14 @@ const Cardetail = (car) => {
                     <TableHead>
                       <TableRow>
                         <StyledTableCell align="center">
-                          <b>Brand: {cardetail.model}</b>
+                          <b>Model: {cardetail.model}</b>
                         </StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
-                        <StyledTableCell align="right">
+                        {/* <StyledTableCell align="right"></StyledTableCell>
+                        <StyledTableCell align="right"></StyledTableCell> */}
+                        <StyledTableCell align="center">
                           <b>Value</b>
                         </StyledTableCell>
-                        <StyledTableCell align="right"></StyledTableCell>
+                        {/* <StyledTableCell align="right"></StyledTableCell> */}
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -477,12 +482,12 @@ const Cardetail = (car) => {
                           >
                             <b>{row.property}</b>
                           </StyledTableCell>
-                          <StyledTableCell align="right"></StyledTableCell>
-                          <StyledTableCell align="right"></StyledTableCell>
-                          <StyledTableCell align="right">
+                          {/* <StyledTableCell align="right"></StyledTableCell> */}
+                          {/* <StyledTableCell align="right"></StyledTableCell> */}
+                          <StyledTableCell align="center">
                             {row.value}
                           </StyledTableCell>
-                          <StyledTableCell align="right"></StyledTableCell>
+                          {/* <StyledTableCell align="right"></StyledTableCell> */}
                         </StyledTableRow>
                       ))}
                     </TableBody>
@@ -529,7 +534,9 @@ const Cardetail = (car) => {
                   <TableHead>
                     <TableRow>
                       <TableCell>
-                        <h2>{cardetail.brand} ( {cardetail.model} )</h2>
+                        <h2>
+                          {cardetail.brand} ( {cardetail.model} )
+                        </h2>
                       </TableCell>
                       <TableCell align="right">SellYourCar</TableCell>
                       <TableCell align="right">OLX</TableCell>
