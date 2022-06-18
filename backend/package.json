@@ -21,6 +21,7 @@
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15",
     "path": "^0.12.7",
+    "puppeteer-core": "^14.4.1",
     "razorpay": "^2.8.1",
     "uuidv4": "^6.2.13"
   }
