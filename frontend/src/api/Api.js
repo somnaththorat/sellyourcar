@@ -86,6 +86,18 @@ export const addPaymentDetail = async (paymentDetails) => {
   return await axios.post(`${usersUrl}/addpaymentdetail`, paymentDetails);
 };
 
+
+export const olxDataApi = async (olxUrl) => {
+  return await axios.post(`${usersUrl}/olxdata`, {headers: olxUrl});
+}
+
+export const carwaleDataApi = async (carwaleUrl) => {
+  return await axios.post(`${usersUrl}/carwaledata`, {headers: carwaleUrl});
+}
+
+
+
+
 //admin apis
 export const authAdmin = async (adminLoginDetails) => {
   return await axios.post(`${usersUrl}/authadmin`, adminLoginDetails);

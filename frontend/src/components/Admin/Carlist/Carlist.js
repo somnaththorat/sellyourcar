@@ -101,6 +101,7 @@ export default function Carlist() {
               ))} */}
 
                 <StyledTableCell>Sr.No</StyledTableCell>
+                <StyledTableCell>carId</StyledTableCell>
                 <StyledTableCell>Car Brand</StyledTableCell>
                 <StyledTableCell>Car Model</StyledTableCell>
                 <StyledTableCell>Engine</StyledTableCell>
@@ -124,7 +125,7 @@ export default function Carlist() {
               {cars.map((car) => (
                 <TableRow>
                   <TableCell>{srno++}</TableCell>
-                  {/* <TableCell>{car._id}</TableCell> */}
+                  <TableCell>{car._id}</TableCell>
                   <TableCell>{car.brand}</TableCell>
                   <TableCell>{car.model}</TableCell>
                   <TableCell>{car.engine} </TableCell>

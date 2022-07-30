@@ -22,6 +22,8 @@ const MyCars = () => {
   const [userInfo, setUserInfo] = useState([]);
   const history = useHistory();
 
+  
+
   const getInfoOfUser = async () => {
     // console.log("mycars.js - getUserInfo()");
     let token = localStorage.getItem("token");
@@ -43,6 +45,11 @@ const MyCars = () => {
   useEffect(() => {
     getInfoOfUser();
   }, []);
+
+
+
+
+  
 
   // const getInfoOfUsersCar = async () => {
   //     console.log("mycars.js - getInfoOfUsersCar()");
@@ -87,6 +94,11 @@ const MyCars = () => {
     });
   };
 
+
+  
+
+
+
   return (
     <>
       <Navbar />
@@ -105,6 +117,11 @@ const MyCars = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Welcome, {userInfo.fullname}
             </Typography>
+            {
+            userInfo.membership === true ? (
+              <p style={{marginRight:"15px", color:"#100720"}}>Membership will expire on {userInfo.membershipexpiry}</p>
+              ) : ("")
+            }
             <Button color="inherit" onClick={editProfile}>
               Edit Profile
             </Button>

@@ -12,6 +12,10 @@ import * as PaytmChecksum from "../paytm/PaytmChecksum.js";
 import { v4 as uuidv4 } from "uuid";
 const SECRET_KEY = "THISISMYSECRETKEYFORSELLYOURCARPROJECT";
 import Razorpay from "razorpay";
+import puppeteer from "puppeteer-core";
+
+
+
 
 export const getUser = async (req, res) => {
   // res.status(200).json("get route from user.controller");
@@ -794,6 +798,115 @@ export const payment = async (req, res) => {
       console.log(error);
     });
 };
+
+
+
+export const fetchOlxData = async (req, res) => {
+  console.log("fetchOlxData controller entered");
+  const url = req.body.headers;
+  console.log("url", url);
+  try {
+    const browser = await puppeteer.launch({
+      headless: false,
+      executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+  })
+  const page = await browser.newPage();
+  await page.goto(url, { waitUntil: 'load', timeout: 0 });
+  
+  await page.click('[class="_89yzn"]')
+  // await page.waitFor(2000);
+  //wait until the page is loaded
+  await page.waitForSelector('[class="_3qDp0"]', { waitUntil: 'load', timeout: 0 });
+  const price = await page.evaluate(() => {
+    const elements = document.getElementsByClassName('_3qDp0');
+    return Array.from(elements).map(element => element.innerText); 
+  })
+  console.log(price); 
+
+  const odometer = await page.evaluate(() => {
+    const tds = Array.from(document.querySelectorAll('._3Q0_l div'))
+        return tds.map(td => td.textContent)
+  })
+  console.log("odometer", odometer);
+
+  let olxresponce = {
+    fuelType: price[0],
+    odoMeter: price[1],
+    transmissionType: price[2],
+  }
+  res.json(olxresponce);
+} catch (error) {
+  res.json({ message: error.message });
+}
+}
+
+
+
+export const fetchCarwaleData = async (req, res) => {
+  console.log("fetchCarwaleData controller entered");
+  const url = req.body.headers;
+  console.log("url", url);
+  try {
+    const browser = await puppeteer.launch({
+      headless: false,
+      executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+  })
+  const page = await browser.newPage();
+  await page.goto(url, { waitUntil: 'load', timeout: 0 });
+  // await page.waitForSelector('[class="o-eqqVmt o-eemiLE o-cYdrZi"]', { waitUntil: 'load', timeout: 0 });
+
+  const price = await page.evaluate(() => {
+    const elements = document.getElementsByClassName('o-Hyyko o-bPYcRG o-eqqVmt');
+    return Array.from(elements).map(element => element.innerText); 
+  })
+  // console.log("price", price);
+  const finalPrice = price[0].replace( /^\D+/g, '');
+  // console.log("finalPrice", finalPrice);
+
+
+
+  const details = await page.evaluate(() => {
+    const elements = document.getElementsByClassName('o-eqqVmt o-eemiLE o-cYdrZi');
+    return Array.from(elements).map(element => element.innerText); 
+  })
+  // console.log(details);
+  let tempacceleration= details[5];
+  // let tempengine = details[1]
+  // console.log("tempengine", tempengine)
+
+
+  let carwaleresponce = {
+    fuelType: details[0],
+    engine: details[1],
+    acceleration: tempacceleration[0],
+    price: finalPrice,
+  }
+  console.log("carwaleresponce", carwaleresponce);
+res.json(carwaleresponce);
+
+
+} catch (error) {
+  res.json({ message: error.message });
+}
+}
+
+
+
+export const test = async(req, res) =>{
+ 
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 //search functionality == done
 //add comparison of car price

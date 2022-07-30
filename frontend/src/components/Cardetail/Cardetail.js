@@ -8,6 +8,8 @@ import {
   razorpay,
   getUserInfo,
   addPaymentDetail,
+  olxDataApi,
+  carwaleDataApi,
 } from "../../api/Api.js";
 import carImage from "../../assets/img/carIcon.png";
 // import axios from 'axios';
@@ -122,29 +124,42 @@ const Cardetail = (car) => {
   // fetch data from olx website
   // const [olxData, setOlxData] = useState([]);
   // console.log(cardetail)
-  const olxUrl = `https://www.olx.in/items/q-${cardetail.model}?isSearchCall=true`;
-  console.log(olxUrl);
+  let newModelName = cardetail.model.toLowerCase().replace(" ", "-")
+  let newBrandName = cardetail.brand.toLowerCase().replace(" ", "-")
+  const olxUrl = `https://www.olx.in/items/q-${newModelName}?isSearchCall=true`;
+  const carwaleUrl = `https://www.carwale.com/${newBrandName}-cars/${newModelName}/`
+  
+  const fetchOlxData = async () => {
+    console.log("fetcholxdata function in cardetail page");
+    console.log("olxUrl", olxUrl);
+    const olxdata = await olxDataApi(olxUrl);
+    console.log("olxdata", olxdata);
+  };
+
+  const [carwaleData, setCarwaleData] = useState('')
+  const fetchCarwaleData = async () => {
+    console.log("fetchcarwaledata function in cardetail page");
+    console.log("carwaleUrl", carwaleUrl);
+    const carwaledata = await carwaleDataApi(carwaleUrl);
+    console.log("carwaledata", carwaledata);
+    const Data = carwaledata.data;
+    console.log("Data", Data);
+    setCarwaleData(Data)
+
+  }
+
+
   useEffect(() => {
     // fetchOlxData();
+    // fetchCarwaleData();
   }, []);
 
-  // const fetchOlxData = async () => {
-  //     fetch(`https://www.olx.in/items/q-${cardetail.model}?isSearchCall=true`)
-  //     .then(response => response.json())
-  //     .then(json => console.log(json))
-  // };
-
-  // const fetchOlxData = async () => {
-  //   fetch("https://jsonplaceholder.typicode.com/todos/1")
-  //     .then((response) => response.json())
-  //     .then((json) => console.log(json));
-  // };
 
   function createDescriptionData(property, value) {
     return { property, value };
   }
 
-  const rows2 = [
+  const ownerCarInfo = [
     createDescriptionData(
       "Acceleration (0-100 km/hr) ",
       cardetail.acceleration + " sec"
@@ -155,6 +170,7 @@ const Cardetail = (car) => {
       cardetail.airconditioning ? "Yes" : "No"
     ),
     createDescriptionData("color", cardetail.color),
+    createDescriptionData("Odometer", cardetail.odometer),
     createDescriptionData("doors", cardetail.doors),
     createDescriptionData("driving Range", cardetail.drivingrange + " km"),
     createDescriptionData("Engine", cardetail.engine + "cc"),
@@ -175,15 +191,19 @@ const Cardetail = (car) => {
     return { name, calories, fat, carbs, protein };
   }
 
-  const rows = [
-    createData("Mileage ", 159, 6.0, 24, 4.0),
-    createData("Ground Clearance ", 237, 9.0, 37, 4.3),
-    createData("Engine Type", 262, 16.0, 24, 6.0),
-    createData("Fuel Type", 305, 3.7, 67, 4.3),
-    createData("Transmission", 356, 16.0, 49, 3.9),
-    createData("Airbags", 356, 16.0, 49, 3.9),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
+
+  //comparison table
+  const comparisonTable = [
+    createData("Acceleration (0-100/ In Seconds)", cardetail.acceleration, "", carwaleData.acceleration, ""),
+    createData("Mileage (Km/Litre) ",  cardetail.milage, 24, 4.0, 0),
+    createData("Ground Clearance (Cm)",  9.0, 37, 4.3, 0),
+    createData("Engine (CC))",  cardetail.engine, 24, carwaleData.engine, 0),
+    createData("Fuel Type",  cardetail.fuelType, 67, 4.3, 0),
+    createData("Transmission Type",  cardetail.transmissionType, 49, 3.9, 0),
+    createData("Airbags",  cardetail.airbags, 49, 3.9, 0),
+    createData("Odometer (Km)",  cardetail.odometer, 49, 3.9, 0),
+    createData("Price (RS)",  cardetail.price, 49, carwaleData.price, 0),
+    createData("Registration Year", cardetail.registrationYear, 49, 3.9, 0),
   ];
 
   const [expanded, setExpanded] = useState(false);
@@ -213,7 +233,7 @@ const Cardetail = (car) => {
   };
 
   const handleAccordionExpandClick = async () => {
-    console.log("accordion clicked");
+    console.log("comparison accordion clicked");
     const token = localStorage.getItem("token");
     // console.log(token)
     if (token) {
@@ -471,7 +491,7 @@ const Cardetail = (car) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {rows2.map((row) => (
+                      {ownerCarInfo.map((row) => (
                         <StyledTableRow key={row}>
                           <StyledTableCell
                             component="th"
@@ -543,7 +563,7 @@ const Cardetail = (car) => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {rows.map((row) => (
+                    {comparisonTable.map((row) => (
                       <TableRow
                         key={row.name}
                         sx={{

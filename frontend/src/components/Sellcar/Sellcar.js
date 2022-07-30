@@ -25,6 +25,7 @@ const initialValue = {
   airconditioning: "",
   acceleration: "",
   drivingrange: "",
+  odometer: "",
   // owner: localStorage.getItem('token'),
   description: "",
 };
@@ -58,6 +59,7 @@ const Sellcar = () => {
     airconditioning,
     acceleration,
     drivingrange,
+    odometer,
     description,
   } = cardetail;
 
@@ -240,6 +242,17 @@ const Sellcar = () => {
             fullWidth
             placeholder="Estimated distance / Full fuel Tank"
           />
+
+<TextField
+            onChange={(e) => onValueChange(e)}
+            name="odometer"
+            vaariant="outlined"
+            label="Odometer"
+            value={odometer}
+            fullWidth
+            placeholder="Estimated distance covered"
+          />
+
           {/* <TextField onChange={(e) => onValueChange(e)} name="owner" vaariant="outlined" label="owner" value={owner} fullWidth  disable/> */}
           <TextField
             onChange={(e) => onValueChange(e)}

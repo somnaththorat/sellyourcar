@@ -17,6 +17,7 @@ const carSchema = mongoose.Schema({
     airconditioning: Boolean,
     acceleration: Number,
     drivingrange: Number,
+    odometer: Number,
     description: String,
     carImages: String,
     ownerDetails: {
